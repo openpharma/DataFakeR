@@ -1,0 +1,56 @@
+public:
+  tables:
+    t1:
+      check_constraints:
+        t1_c2_check:
+          column: c2
+          expression: !expr (c2 > 123)
+        diff_check:
+          expression: !expr (c5 > c1)
+      columns:
+        c1:
+          not_null: true
+          type: integer
+        c2:
+          type: character
+        c3:
+          default: 'false'
+          type: boolean
+        c4:
+          type: text
+        c5:
+          type: integer
+      foreign_keys:
+        t1_c2_fkey:
+          columns:
+          - c2
+          references:
+            columns:
+            - c21
+            table: t2
+      primary_key:
+        t1_pkey:
+          columns:
+          - c1
+    t2:
+      check_constraints:
+        t2_c24_check:
+          column: c24
+          expression: !expr c24 == 16
+      columns:
+        c21:
+           not_null: true
+           type: character
+        c22:
+           type: character varying(16)
+           not_null: true
+           values: [A, B]
+        c23:
+           type: integer
+           formula: !expr paste(c21, 1)
+        c24:
+           type: integer
+      primary_key:
+        t2_pkey:
+          columns:
+          - c21

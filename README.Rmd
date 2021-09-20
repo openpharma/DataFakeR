@@ -1,0 +1,189 @@
+---
+output: github_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+library(DataFakeR)
+set.seed(123)
+options(tibble.width = Inf)
+```
+
+# DataFakeR <img src="README_files/figure-gfm/logo.png" align="right" width="120" />
+
+[![version](https://img.shields.io/static/v1.svg?label=github.com&message=v.0.1.2&color=ff69b4)](https://openpharma.github.io/DataFakeR/)
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-success.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
+## Overview
+
+DataFakeR is an R package designed to help you generate sample of fake data preserving specified assumptions about the original one. 
+
+<center>
+## <span style="color:blue"> DataFakeR 0.1.2 is now available!</span>
+</center>
+
+## Installation
+
+```
+remotes::install_github(
+  "openpharma/DatFakeR"
+)
+```
+
+## Learning DataFakeR
+
+If you are new to DataFakeR, look at the **[Welcome Page](https://openpharma.github.io/DataFakeR/articles/main.html)**.
+
+You may find there a list of useful articles that will guide you through the package functionality.
+
+## Usage
+
+### Configure schema YAML structure
+
+```
+# schema-books.yml
+public:
+  tables:
+    books:
+      nrows: 10
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+          values: [Fantasy, Adventure, Horror, Romance]
+        bought:
+          type: date
+          range: ['2020-01-02', '2021-06-01']
+        amount:
+          type: smallint
+          range: [1, 99]
+          na_ratio: 0.2
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+    borrowed:
+      nrows: 30
+      columns:
+        book_id:
+          type: char(8)
+          not_null: true
+        user_id:
+          type: char(10)
+      foreign_keys:
+        book_id_fkey:
+          columns: book_id
+          references:
+            columns: book_id
+            table: books
+```
+
+### Define custom simulation methods if needed
+
+```{r}
+books <- function(n, add_second = FALSE) {
+  first <- c("Learning", "Amusing", "Hiding", "Symbols", "Hunting", "Smile")
+  second <- c("Of", "On", "With", "From", "In", "Before")
+  third <- c("My", "Your", "The", "Common", "Mysterious", "A")
+  fourth <- c("Future", "South", "Technology", "Forest", "Storm", "Dreams")
+  second_res <- NULL
+  if (add_second) {
+    second_res <- sample(second, n, replace = TRUE)
+  }
+  paste(
+    sample(first, n, replace = TRUE), second_res, 
+    sample(third, n, replace = TRUE), sample(fourth, n, replace = TRUE)
+  )
+}
+
+simul_spec_character_book <- function(n, unique, spec_params, ...) {
+  spec_params$n <- n
+  
+  DataFakeR::unique_sample(
+    do.call(books, spec_params), 
+    spec_params = spec_params, unique = unique
+  )
+}
+
+set_faker_opts(
+  opt_simul_spec_character = opt_simul_spec_character(book = simul_spec_character_book)
+)
+
+```
+
+### Source schema (and check table and column dependencies)
+
+```{r}
+options("dfkr_verbose" = TRUE) # set `dfkr_verbose` option to see the workflow progress
+sch <- schema_source("schema-books.yml")
+```
+
+```{r tbls_dep}
+schema_plot_deps(sch)
+```
+
+```{r books_dep}
+schema_plot_deps(sch, "books")
+```
+
+### Run data simulation
+
+```{r}
+sch <- schema_simulate(sch)
+```
+
+### Check the results
+
+```{r}
+schema_get_table(sch, "books")
+```
+
+```{r}
+schema_get_table(sch, "borrowed")
+```
+
+## Acknowledgment
+
+**The package was created thanks to [Roche](https://www.roche.com/) support and contributions from RWD Insights Engineering Team.**
+
+Special thanks to:
+
+- [Adam Foryś](mailto:adam.forys@gmail.com) for technical support, numerous suggestions for the current and future implementation of the package.
+- [Adam Leśniewski](mailto:alesniewski123@gmail.com) for challenging limitations of the package by providing multiple real-world test scenarios (and wonderful hex sticker!).
+- [Paweł Kawski](mailto:pawel.kawski@gmail.com) for indication of initial assumptions about the package based on real-world medical data.
+- [Kamil Wais](mailto:kamil.wais@gmail.com) for highlighting the need for the package and its relevance to real-world applications.
+
+## Lifecycle
+
+DataFakeR 0.1.2 is at experimental stage. If you find bugs or post an issue on GitHub page at <https://github.com/openapharma/DataFakeR/issues>
+
+## Getting help
+
+There are two main ways to get help with `DataFakeR`
+
+1. Reach the package author via email: krystian8207@gmail.com.
+2. Post an issue on our GitHub page at [https://github.com/openapharma/DataFakeR/issues](https://github.com/openapharma/DataFakeR/issues).

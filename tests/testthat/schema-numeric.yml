@@ -1,0 +1,60 @@
+public:
+  tables:
+    patients:
+      columns:
+        id:
+          not_null: true
+          unique: true
+          type: numeric(8)
+        age:
+          type: decimal(2)
+        height:
+          type: numeric(3, 2)
+        weight:
+          type: numeric
+          spec: distr
+          spec_params:
+            distr: rnorm
+            mean: 65
+            sd: 5
+        bmi:
+          type: double precision
+          formula: !expr weight / height ^ 2
+        blood:
+          type: numeric
+          range: [0, 10]
+        marker:
+          type: numeric
+      primary_key:
+        patients_pkey:
+          columns:
+          - id
+    blood_rank:
+      check_constraints:
+        blood_rank_mocked_check:
+          column: mocked
+          expression: !expr mocked == 1
+      columns:
+        sample:
+           unique: true
+           type: numeric(8)
+        blood:
+           not_null: true
+           type: numeric
+        rank:
+           type: real
+           formula: !expr ifelse(blood < 5, 0, 2)
+        mocked:
+           type: numeric
+      foreign_keys:
+        table_blood_rank_fkey:
+          columns:
+          - blood
+          references:
+            columns:
+            - blood
+            table: patients
+      primary_key:
+        blood_rank_pkey:
+          columns:
+          - sample

@@ -1,0 +1,20 @@
+public:
+  tables:
+    patients:
+      columns:
+        id:
+          type: serial
+        birth:
+          type: date
+          format: '%m/%d/%Y'
+        treatment:
+          type: date
+          range: ["2020-01-01", "2020-02-01"]
+        death:
+          type: date
+          range: ["01/01/2020", "02/01/2020"]
+          format: '%m/%d/%Y'
+      primary_key:
+        patients_pkey:
+          columns:
+          - id

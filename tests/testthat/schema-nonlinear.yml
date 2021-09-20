@@ -1,0 +1,45 @@
+public:
+  tables:
+    t1:
+      columns:
+        c1:
+          type: integer
+        c2:
+          type: smallint
+        c3:
+          type: boolean
+        c4:
+          type: text
+      foreign_keys:
+        t1_c2_fkey:
+          columns:
+          - c2
+          references:
+            columns:
+            - c21
+            table: t2
+        t2_c3_fkey:
+          columns:
+          - c3
+          references:
+            columns:
+            - c31
+            table: t3
+      primary_key:
+        t1_pkey:
+          columns:
+          - c1
+    t2:
+      nrows: 20
+      columns:
+        c21:
+           type: integer
+        c22:
+           type: character varying(16)
+           spec: name
+    t3:
+      columns:
+        c31:
+           type: integer
+        c32:
+           type: character varying(16)

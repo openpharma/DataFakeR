@@ -1,0 +1,55 @@
+public:
+  tables:
+    books:
+      check_constraints:
+        books_author_dupl_check:
+          column: author_dupl
+          expression: !expr (author_dupl == author)
+      columns:
+        id:
+          not_null: true
+          type: char(8)
+        description:
+          type: varchar(18)
+        name:
+          type: text
+          spec: name
+        author_dupl:
+          type: text
+        author:
+          type: text
+        digest:
+          type: text
+          formula: !expr paste('dig', author)
+      foreign_keys:
+        table_author_fkey:
+          columns:
+          - author
+          references:
+            columns:
+            - author
+            table: authors
+      primary_key:
+        books_pkey:
+          columns:
+          - id
+    authors:
+      check_constraints:
+        authors_mocked_check:
+          column: mocked
+          expression: !expr mocked == 'const'
+      columns:
+        author:
+           not_null: true
+           type: text
+           spec: name
+        job:
+           type: text
+           unique: false
+           values: [Writer, Journalist, Singer]
+        mocked:
+           type: text
+      primary_key:
+        authors_pkey:
+          columns:
+          - author

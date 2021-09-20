@@ -1,0 +1,186 @@
+---
+title: "Simulation Options"
+author: "Krystian Igras"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Simulation Options}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+library(DataFakeR)
+set.seed(123)
+options(tibble.width = Inf)
+```
+
+DataFakeR package allows to customize each step of [DataFakeR workflow](datafaker_workflow.html), 
+by setting up proper options using `set_faker_opts` function (and option-related specific methods).
+
+All the configurable options are stored with the default values within `default_faker_opts` object.
+
+```{r}
+str(default_faker_opts, max.level = 1)
+```
+
+Customizable options can be divided into the main three groups:
+
+- pulling database schema configuration - define what tables information should be sourced from database schema,
+- default column-type parameters - define default parameters for each column type (when skipped in YAML configuration file),
+- default table parameters - define the structure of simulated tables such as number of rows in the result,
+- column-type simulation methods configuration - define what simulation methods should be used to generate fake data.
+
+### Pulling database schema configuration
+
+All the parameters in `set_faker_opts` prefixed with `opt_pull`:
+
+- `opt_pull_character` - specifying what information to pull for character columns,
+- `opt_pull_numeric` - specifying what information to pull for numeric columns,
+- `opt_pull_integer` - specifying what information to pull for integer columns,
+- `opt_pull_logical` - specifying what information to pull for logical columns,
+- `opt_pull_date` - specifying what information to pull for date columns,
+- `opt_pull_table` - specifying what information to pull for tables.
+
+See [Sourcing structure from database](structure_from_db.Rmd) for more details.
+
+### Default column-type parameters
+
+Looking at the single column specification of configuration YAML file:
+
+```
+columns:
+  column_a1:
+    type: char(8)
+    not_null: true
+    unique: true
+    ...
+```
+
+you may find a list of parameters attached to each column.
+Such parameters are passed to each [simulation method](simulation_methods.html) and may be used to achieve demanded form of the resulted column.
+
+When the number of columns is large, it may be inconvenient to define such parameters per each column in configuration file.
+In order to make such configuration easier, you may define the default parameters to each column type with `opt_default_<column-type>` method.
+
+Simply put:
+```
+my_opts <- set_faker_opts(
+  opt_default_<column-type> = opt_default_<column-type>(...)
+)
+```
+
+The default parameters in DataFakeR can be accessed by `default_faker_opts$opt_default_<column-type>`.
+
+For example for character type columns we have:
+```{r}
+default_faker_opts$opt_default_character
+```
+
+That means, whenever we simulate character column and such parameters are not defined in schema YAML file you will get:
+
+- `nchar = 10`,
+- `not_null = FALSE`, 
+- `unique = FALSE`, 
+- `default = ""`
+
+as passed parameters and values to simulation methods.
+
+**Column type mapping**
+
+When looking at the default parameters list, we could find a parameter named `regexp`.
+This is exceptional parameter that is not passed to simulation methods but is responsible to map connection between 
+column type defined in configuration YAML file and the target R type.
+
+For example `default_faker_opts$opt_default_character$regexp = "text|char"`, means that whenever column type matches regular expression `"text|char"`
+such column will be treated in R as character class one.
+
+You may modify this regular expression if you want to extend the mapping between source column types and the target R column class.
+
+### Default table parameters
+
+When simulating the data, except column specific parameters you may also want to pass parameters to the each table.
+One of them may be specifying number or rows that the resulted table should contain.
+
+Such parameters are configurable by `opt_default_table` method.
+Each parameter specified by the method will be then attached to each table and used in simulation process.
+
+Each parameter passed to `opt_default_table` should be either a constant value, or the function that iterates over all the tables,
+and returns the proper parameter value for each one.
+
+So, specifying:
+```{r eval=FALSE}
+set_faker_opts(opt_default_table = opt_default_table(nrows = 10))
+```
+
+will result with attaching `nrows = 10` to each table, and as a result (based on DataFakeR functionality) each simulated table will have 10 rows.
+
+Setting up (the default setting):
+```{r eval=FALSE}
+set_faker_opts(opt_default_table = opt_default_table(nrows = nrows_simul_constant(10)))
+```
+
+will result with attaching `nrows = 10` to each table, whenever `nrows` was not specified in the configuration.
+
+DataFakeR provides also the second method for defining number of rows `nrows_simul_ratio` that allows to calculate number of rows based on provided `ratio` and `total` number of rows in all tables together.
+For example speficying `nrows = nrows_simul_ratio(0.1, 100)`, will result with:
+
+- `0.1 * 100` rows when the table doesn't have `nrows` specified in YAML file,
+- `nrows * 100` rows when `nrows` is specified for the table, and `nrows` is between 0 and 1,
+- an error when `nrows` is specified in yaml file but is larger than 1.
+
+To understand how to create custom methods please check the definition of `nrows_simul_constant` and `nrows_simul_ratio`.
+
+**Note** The only supported `opt_default_table` parameter is `nrows`. In the future releases, the option to set up custom parameters and actively use them in the simulation process will be enabled.
+
+### Column-type simulation methods configuration
+
+The last group of configuration parameters is meant to provide an option to customize simulation methods.
+As presented in [simulation methods](simulation_methods.html) page, there are four types of simulation:
+
+1. Deterministic (formula or constraint-based) simulation.
+2. Special method simulation.
+3. Restricted simulation.
+4. Default simulation.
+
+All the type simulation methods (except deterministic one) can be configured with the `set_faker_opts` using:
+
+- `opt_simul_spec_<column-type>` parameter and method to specify list of possible special simulation methods for selected column type:
+```{r eval=FALSE}
+set_faker_opts(
+  opt_simul_spec_<column-type> = opt_simul_spec_<column-type>(
+    <spec-method-name> = <spec-function>
+  )
+)
+```
+
+- `opt_simul_restricted_<column-type>` parameter and method to specify list of possible restricted simulation methods for selected column type:
+```{r eval=FALSE}
+set_faker_opts(
+  opt_simul_restricted_<column-type> = opt_simul_restricted_<column-type>(
+    <restricted-method-name> = <restricted-function>
+  )
+)
+```
+
+- `opt_simul_default_fun_<column-type>` parameter to specify default simulation method for selected column type:
+```{r eval=FALSE}
+set_faker_opts(
+  opt_simul_default_fun_<column-type> = <default-function>
+)
+```
+
+The examples showing how to define custom methods and what each method type means are presented at [simulation methods](simulation_methods.html).

@@ -1,0 +1,113 @@
+title: DataFakeR
+url: https://openpharma.github.io/DataFakeR/
+home:
+  strip_header: true
+navbar:
+  left:
+    - icon: fa fa-thumbs-o-up
+      text: "Articles"
+      menu:
+      - text: "Welcome"
+        href: articles/main.html
+      - text: "DataFakeR workflow"
+        href: articles/datafaker_workflow.html
+      - text: "YAML schema structure"
+        href: articles/schema_structure.html
+      - text: "Sourcing structure from database"
+        href: articles/structure_from_db.html
+      - text: "Simulation Options"
+        href: articles/simulation_options.html
+      - text: "Simulation Methods"
+        href: articles/simulation_methods.html
+      - text: "Extra parameters"
+        href: articles/extra_parameters.html
+    - icon: fa fa-file-code-o
+      text: "Functions"
+      href: reference/index.html
+    - icon: fa fa-newspaper-o
+      text: "News"
+      href: news/index.html
+    - icon: fa fa-ambulance
+      text: "Issues"
+      href: https://github.com/openpharma/DataFakeR/issues
+reference:
+  - title: "schema_: Create schema object and perform desired actions"
+    desc: "The set of methods that allow to source schema object and perform needed actions such as simulating data or checking schema dependecy graph."
+    contents:
+      - schema_source
+      - schema_update_source
+      - schema_get_table
+      - schema_plot_deps
+      - schema_simulate
+  - title: "opt_pull_: Configure metadata sourced from Database"
+    desc: "Configure which metadata describing tables and columns should be sourced when dumping the YAML schema from Database."
+    contents:
+      - opt_pull_table
+      - opt_pull_character
+      - opt_pull_numeric
+      - opt_pull_integer
+      - opt_pull_date
+      - opt_pull_logical
+  - title: "opt_default_: Configure default parameters attached to each column type and tables"
+    desc: "Configure what default parameters should be applied to columns and tables when the ones are not directly provided in configuration file"
+    contents:
+      - opt_default_table
+      - opt_default_character
+      - opt_default_numeric
+      - opt_default_integer
+      - opt_default_date
+      - opt_default_logical
+  - title: "opt_simul_spec_: Configure special simulation methods"
+    desc: "Configure set of available special methods for simulating column values"
+    contents:
+      - opt_simul_spec_character
+      - opt_simul_spec_numeric
+      - opt_simul_spec_integer
+      - opt_simul_spec_date
+      - opt_simul_spec_logical
+  - title: "opt_simul_restricted_: Configure restricted simulation methods"
+    desc: "Configure set of available restricted methods for simulating column values"
+    contents:
+      - opt_simul_restricted_character
+      - opt_simul_restricted_numeric
+      - opt_simul_restricted_integer
+      - opt_simul_restricted_date
+      - opt_simul_restricted_logical
+  - title: "simul_: Available simulation methods"
+    desc: "Special, Restricted and Default methods available for simulating each column type"
+    contents:
+      - simul_default_character
+      - simul_spec_character_name
+      - simul_restricted_character_in_set
+      - simul_restricted_character_fkey
+      - simul_spec_numeric_distr
+      - simul_default_numeric
+      - simul_restricted_numeric_range
+      - simul_restricted_numeric_fkey
+      - simul_spec_date_distr
+      - simul_default_date
+      - simul_restricted_date_range
+      - simul_restricted_date_fkey
+      - simul_spec_integer_distr
+      - simul_default_integer
+      - simul_restricted_integer_range
+      - simul_restricted_integer_in_set
+      - simul_restricted_integer_fkey
+      - simul_default_logical
+      - simul_spec_logical_distr
+      - simul_restricted_logical_fkey
+  - title: "List and set the package configuration"
+    desc: "List standard package configuration and set your custom one"
+    contents:
+      - default_faker_opts
+      - set_faker_opts
+  - title: "nrows_simul: Specify target number of simulated rows for each table"
+    desc: "Methods passed to opt_default_table that allows to specify what number of rows should each simulated table have"
+    contents:
+      - nrows_simul_constant
+      - nrows_simul_ratio
+  - title: "Sample modifiers"
+    desc: "Methods that allow to perform useful operations on sample, such as making sure sample is unique or have desired number of NAs"
+    contents:
+      - unique_sample
+      - na_rand
