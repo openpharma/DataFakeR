@@ -1,0 +1,16 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  datafaker_workflow: datafaker_workflow.html
+  extra_parameters: extra_parameters.html
+  main: main.html
+  schema_structure: schema_structure.html
+  simulation_methods: simulation_methods.html
+  simulation_options: simulation_options.html
+  structure_from_db: structure_from_db.html
+last_built: 2021-09-20T11:28Z
+urls:
+  reference: https://openpharma.github.io/DataFakeR//reference
+  article: https://openpharma.github.io/DataFakeR//articles
+
