@@ -33,10 +33,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-renv-
 
-    - name: Restore packages
+    - name: Init system dependencies
       run: |
-        apt-get update
-        apt-get install libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+        apt update
+        apt install libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
     - name: Restore packages
       shell: Rscript {0}
