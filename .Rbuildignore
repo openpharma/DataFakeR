@@ -10,3 +10,4 @@ Dockerfile
 ^pkgdown$
 schema-books.yml
 schema.yml
+^\.github$
