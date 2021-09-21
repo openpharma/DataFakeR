@@ -50,6 +50,7 @@ jobs:
         shell: Rscript {0}
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          if (!requireNamespace("rcmdcheck", quietly = TRUE)) install.packages("rcmdcheck")
           renv::restore()
 
       - uses: r-lib/actions/check-r-package@v1
