@@ -40,9 +40,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install libcurl4-openssl-dev
 
-      - uses: krystian8207/actions/setup-r-dependencies@master
+      - uses: r-lib/action/setup-renv@master
         with:
-          extra-packages: rcmdcheck
+          cache-version: 2
 
       - name: Check
         env:
