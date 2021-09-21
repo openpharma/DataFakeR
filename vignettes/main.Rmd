@@ -54,4 +54,4 @@ Here is a list of our main package pages
 There are two main ways to get help with `DataFakeR`
 
 1. Reach the package author via email: krystian8207@gmail.com.
-2. Post an issue on our GitHub page at [https://github.com/openapharma/DataFakeR/issues](https://github.com/openapharma/DataFakeR/issues).
+2. Post an issue on our GitHub page at [https://github.com/openpharma/DataFakeR/issues](https://github.com/openpharma/DataFakeR/issues).

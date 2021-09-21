@@ -97,6 +97,7 @@ read_schema_file <- function(file) {
     input = file,
     handlers = list(expr = function(x) parse(text = x))
   )
+
   if (length(schema) != 1) {
     stop("Multiple schemas not supported")
   }

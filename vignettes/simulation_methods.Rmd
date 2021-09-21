@@ -73,6 +73,7 @@ public:
 ```
 
 While running the standard simulation process we get the following result:
+
 ```{r}
 set.seed(123)
 sch <- schema_source(system.file("extdata", "schema-books.yml", package = "DataFakeR"))

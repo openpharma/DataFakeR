@@ -8,7 +8,7 @@ Dockerfile
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-schema-books.yml
+schema_books.yml
 schema.yml
 ^\.github$
 README_files
