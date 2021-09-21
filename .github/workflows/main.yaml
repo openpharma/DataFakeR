@@ -40,7 +40,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install libcurl4-openssl-dev
 
-      - uses: r-lib/action/setup-renv@master
+      - uses: r-lib/actions/setup-renv@master
         with:
           cache-version: 2
 
