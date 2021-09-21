@@ -50,7 +50,7 @@ jobs:
           Sys.getenv("RENV_PATHS_ROOT")
           Sys.getenv("RENV_PATHS_LIBRARY")
           .libPaths()
-        shell: Rscript{0}
+        shell: Rscript {0}
 
       #- name: Check
       #  env:
