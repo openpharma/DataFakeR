@@ -18,8 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: '4.1'}
-          - {os: windows-latest, r: '4.1'}
           - {os: ubuntu-18.04,   r: '4.1'}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -30,15 +28,16 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-
-      - uses: r-lib/actions/setup-r-dependencies@v1
-        with:
-          extra-packages: rcmdcheck
 
       - uses: r-lib/actions/setup-renv@v1
         with:
