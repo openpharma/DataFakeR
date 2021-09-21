@@ -55,7 +55,8 @@ Suggests:
     lintr,
     httr,
     mockery,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rcmdcheck
 Config/testthat/edition: 3
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
