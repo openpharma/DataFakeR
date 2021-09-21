@@ -23,6 +23,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      RENV_PATHS_ROOT: $HOME/.local/share/renv
 
     steps:
       - uses: actions/checkout@v2
@@ -53,13 +54,13 @@ jobs:
           library(magrittr)
         shell: Rscript {0}
 
-      #- name: Check
-      #  env:
-      #    _R_CHECK_CRAN_INCOMING_: false
-      #  run: |
-      #    options(crayon.enabled = TRUE)
-      #    rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-      #  shell: Rscript {0}
+      - name: Check
+       env:
+         _R_CHECK_CRAN_INCOMING_: false
+       run: |
+         options(crayon.enabled = TRUE)
+         rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+       shell: Rscript {0}
 
       #- name: Show testthat output
       #  if: always()
