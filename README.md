@@ -220,8 +220,7 @@ Special thanks to:
 ## Lifecycle
 
 DataFakeR 0.1.2 is at experimental stage. If you find bugs or post an
-issue on GitHub page at
-<https://github.com/openapharma/DataFakeR/issues>
+issue on GitHub page at <https://github.com/openpharma/DataFakeR/issues>
 
 ## Getting help
 
