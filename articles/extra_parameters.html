@@ -107,7 +107,7 @@
       <h1 data-toc-skip>Extra parameters</h1>
                         <h4 class="author">Krystian Igras</h4>
             
-            <h4 class="date">2021-09-20</h4>
+            <h4 class="date">2021-09-21</h4>
       
       
       <div class="hidden name"><code>extra_parameters.Rmd</code></div>
@@ -144,7 +144,7 @@ public:
           range: [0, 1]</code></pre>
 <p>Let’s simulate the data using the below definition:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="st">"schema-patient.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-patient.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"patient"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 5</span>
@@ -194,7 +194,7 @@ public:
           range: [0, 1]</code></pre>
 <p>Let’s simulate the data using the below definition:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-patient_2.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-patient_2.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"patient"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 5</span>
@@ -242,7 +242,7 @@ public:
           range: [0, 1]</code></pre>
 <p>Looking at the dependency graph:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-patient_3.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-patient_3.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_plot_deps</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"patient"</span><span class="op">)</span></code></pre></div>
 <p><img src="extra_parameters_files/figure-html/unnamed-chunk-3-1.png" width="1600" style="display: block; margin: auto;"></p>
 <p>we can see, DataFakeR detected dependency between <code>patient_id</code> and <code>line_numer</code> column.</p>
@@ -314,7 +314,11 @@ public:
 <span class="op">)</span></code></pre></div>
 <p>Now we can start simulation:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-patient_4.yml"</span>, <span class="va">my_opts</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span>
+  <span class="va">sch</span>, 
+  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-patient_4.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span>,
+  <span class="va">my_opts</span>
+<span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"patient"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 5</span>
@@ -388,7 +392,11 @@ public:
   <span class="op">)</span>
 <span class="op">)</span>
 
-<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-patient_5.yml"</span>, <span class="va">my_opts</span><span class="op">)</span>
+<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span>
+  <span class="va">sch</span>, 
+  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-patient_5.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span>, 
+  <span class="va">my_opts</span>
+<span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="co">#&gt; [1] "M"</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"patient"</span><span class="op">)</span>

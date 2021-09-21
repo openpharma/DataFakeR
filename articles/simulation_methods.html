@@ -107,7 +107,7 @@
       <h1 data-toc-skip>Simulation methods</h1>
                         <h4 class="author">Krystian Igras</h4>
             
-            <h4 class="date">2021-09-20</h4>
+            <h4 class="date">2021-09-21</h4>
       
       
       <div class="hidden name"><code>simulation_methods.Rmd</code></div>
@@ -154,7 +154,7 @@ public:
 <p>While running the standard simulation process we get the following result:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="st">"schema-books.yml"</span><span class="op">)</span>
+<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 7</span>
@@ -208,7 +208,7 @@ public:
           expression: !expr purchase_id == paste0('purchase_', bought)</code></pre>
 <p>let’s update the source and plot column dependencies:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-books_2.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_2.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_plot_deps</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span></code></pre></div>
 <p><img src="simulation_methods_files/figure-html/unnamed-chunk-2-1.png" width="1600" style="display: block; margin: auto;"></p>
 <p>As you can see DataFakeR detected dependency between <code>purchase_id</code> and <code>bought</code> column. More to that the package will assure <code>bought</code> column will be simulated before <code>purchase_id</code>.</p>
@@ -271,7 +271,7 @@ public:
           expression: !expr purchase_id == paste0('purchase_', bought)</code></pre>
 <p>Again, update the source and plot column dependencies:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-books_3.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_3.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_plot_deps</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span></code></pre></div>
 <p><img src="simulation_methods_files/figure-html/unnamed-chunk-4-1.png" width="1600" style="display: block; margin: auto;"></p>
 <p>The column dependencies are detected correctly. Let’s move then to simulation step:</p>
@@ -367,7 +367,7 @@ public:
           expression: !expr purchase_id == paste0('purchase_', bought)</code></pre>
 <p>Again, update the source and plot column dependencies:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="st">"schema-books_4.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_4.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 7</span>
@@ -414,7 +414,7 @@ public:
 <span class="co">#&gt;         unique = unique) %&gt;% levels_rand(unique = unique, levels_ratio = levels_ratio) %&gt;% </span>
 <span class="co">#&gt;         na_rand(not_null = not_null, na_ratio = na_ratio)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x556474af1110&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x55812764e9f8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></code></pre></div>
 <p>The <code>name</code> method was defined and we were able to use it in the simulation. Looking at the function body, we may see it uses <code><a href="https://docs.ropensci.org/charlatan/reference/ch_name.html">charlatan::ch_name</a></code> function to simulate human-readable names.</p>
 <p>What else can we spot regarding the method definition? The below points are worth notice:</p>
@@ -528,7 +528,10 @@ public:
 <code class="sourceCode R"><span class="va">my_opts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/faker_configuration.html">set_faker_opts</a></span><span class="op">(</span>
   opt_simul_spec_character <span class="op">=</span> <span class="fu"><a href="../reference/special_simulation.html">opt_simul_spec_character</a></span><span class="op">(</span>book <span class="op">=</span> <span class="va">simul_spec_character_book</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="st">"schema-books_5.yml"</span>, faker_opts <span class="op">=</span> <span class="va">my_opts</span><span class="op">)</span>
+<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_source.html">schema_source</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_5.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span>, 
+  faker_opts <span class="op">=</span> <span class="va">my_opts</span>
+<span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 7</span>
@@ -596,7 +599,7 @@ spec_params:
 <span class="co">#&gt;     sample(values, n, replace = !unique) %&gt;% na_rand(not_null = not_null, </span>
 <span class="co">#&gt;         na_ratio = na_ratio)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x556474adfd80&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5581276381d8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $in_set</span>
@@ -612,7 +615,7 @@ spec_params:
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt;     return(NULL)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x556474adaff0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x558127639198&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $range</span>
@@ -620,13 +623,13 @@ spec_params:
 <span class="co">#&gt;     levels_ratio, ...) </span>
 <span class="co">#&gt; {</span>
 <span class="co">#&gt;     if (!missing(range)) {</span>
-<span class="co">#&gt;         return(unique_sample(round(runif(n, range[1], range[2])), </span>
-<span class="co">#&gt;             range = range, n = n, unique = unique) %&gt;% na_rand(not_null = not_null, </span>
-<span class="co">#&gt;             na_ratio = na_ratio))</span>
+<span class="co">#&gt;         return(unique_sample(round(stats::runif(n, range[1], </span>
+<span class="co">#&gt;             range[2])), range = range, n = n, unique = unique) %&gt;% </span>
+<span class="co">#&gt;             na_rand(not_null = not_null, na_ratio = na_ratio))</span>
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt;     return(NULL)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x556474ad79b0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x558127635b58&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></code></pre></div>
 <p>We can see there are three methods defined:</p>
 <ul>
@@ -682,7 +685,7 @@ public:
           expression: !expr purchase_id == paste0('purchase_', bought)
 </code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"schema-books_6.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_6.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 7</span>
@@ -725,7 +728,7 @@ public:
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt;     return(NULL)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x556474aef9d0&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x55812764d2b8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></code></pre></div>
 <p>So let’s assume we want the genre to be simulated from set: <code>Fantasy</code>, <code>Adventure</code>, <code>Horror</code>, <code>Romance</code>.</p>
 <p>Let’s define such set as possible <code>values</code> for <code>genre</code> column:</p>
@@ -761,7 +764,7 @@ public:
           expression: !expr purchase_id == paste0('purchase_', bought)
 </code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"schema-books_7.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_7.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 7</span>
@@ -823,7 +826,7 @@ public:
           expression: !expr purchase_id == paste0('purchase_', bought)
 </code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"schema-books_8.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_8.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_simulate</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_get_table</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"books"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 7</span>
@@ -903,7 +906,7 @@ public:
             table: books</code></pre>
 <p>Let’s update the file and check table dependencies:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="st">"schema-books_9.yml"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/schema_methods.html">schema_update_source</a></span><span class="op">(</span><span class="va">sch</span>, <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"schema-books_9.yml"</span>, package <span class="op">=</span> <span class="st">"DataFakeR"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/schema_methods.html">schema_plot_deps</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span></code></pre></div>
 <p><img src="simulation_methods_files/figure-html/unnamed-chunk-22-1.png" width="1600" style="display: block; margin: auto;"></p>
 <p>As shown, DataFakeR detected dependency between <code>books</code> and <code>borrowed</code>, and will generate <code>books</code> table first to get possible values for foreign key column.</p>

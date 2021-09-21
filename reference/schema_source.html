@@ -177,6 +177,12 @@ The defined structure is then used to prepare schema dependency graph, that is:<
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>source</th>
+      <td><p>Connection to Redshift or Postgres database or path to YAML configuration file
+from which schema metadata should be sourced.
+When missing <code>file</code> defined file will be sourced if existing.</p></td>
+    </tr>
+    <tr>
       <th>schema</th>
       <td><p>Schema name from which the structure should be sourced.</p></td>
     </tr>
@@ -188,11 +194,6 @@ The defined structure is then used to prepare schema dependency graph, that is:<
     <tr>
       <th>faker_opts</th>
       <td><p>Structure sourcing and columns simulation config.</p></td>
-    </tr>
-    <tr>
-      <th>db_conn</th>
-      <td><p>Connection to Redshift or Postgres database.
-When missing <code>file</code> defined file will be sourced if existing.</p></td>
     </tr>
     </table>
 
