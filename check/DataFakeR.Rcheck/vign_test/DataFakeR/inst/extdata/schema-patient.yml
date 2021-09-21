@@ -1,0 +1,17 @@
+public:
+  tables:
+    patient:
+      columns:
+        treatment_id:
+          type: varchar
+          formula: !expr paste0(patient_id, line_number)
+        patient_id:
+          type: char(8)
+        line_number:
+          type: smallint
+        gender:
+          type: char(1)
+          values: [F, M]
+        biomarker:
+          type: numeric
+          range: [0, 1]

@@ -56,6 +56,10 @@ for example when dealing with ids column.}
 \item{nchar}{Should maximum number of characters in column be pulled? Is so stored as
 \code{nchar} parameter in configuration YAML file.}
 
+\item{na_ratio}{Should ratio of NA values existing in column be sourced?}
+
+\item{levels_ratio}{Should ratio of unique column values be sourced?}
+
 \item{...}{Other parameters defining column metadata source. Currently unsupported.}
 
 \item{range}{Should column range be sourced? Is so stored as \code{range} parameter in

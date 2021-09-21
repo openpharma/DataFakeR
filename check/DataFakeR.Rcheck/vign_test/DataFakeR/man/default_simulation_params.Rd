@@ -72,11 +72,15 @@ type to desired R class.}
 \item{nchar}{Maximum number of characters when simulating character values.
 When source column is of type \code{char(n)} the parameter is ignored.}
 
+\item{na_ratio}{Ratio of NA values returned in simulated sample.}
+
 \item{not_null}{Should the column allow to simulate NA values?}
 
 \item{unique}{Should column values be unique?}
 
 \item{default}{Default column value. Ignored during simulation.}
+
+\item{levels_ratio}{Ratio of unique values (in terms of sample length) simulated in the sample.}
 
 \item{...}{Other default parameters attached to the column definition.}
 

@@ -18,12 +18,12 @@ options(tibble.width = Inf)
 
 ## -----------------------------------------------------------------------------
 set.seed(123)
-sch <- schema_source("schema-books.yml")
+sch <- schema_source(system.file("extdata", "schema-books.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, file = "schema-books_2.yml")
+sch <- schema_update_source(sch, file = system.file("extdata", "schema-books_2.yml", package = "DataFakeR"))
 schema_plot_deps(sch, "books")
 
 ## -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, file = "schema-books_3.yml")
+sch <- schema_update_source(sch, file = system.file("extdata", "schema-books_3.yml", package = "DataFakeR"))
 schema_plot_deps(sch, "books")
 
 ## -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ schema_get_table(sch, "books")
 schema_get_table(sch, "books")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, file = "schema-books_4.yml")
+sch <- schema_update_source(sch, file = system.file("extdata", "schema-books_4.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
@@ -100,7 +100,10 @@ simul_spec_character_book <- function(n, unique, spec_params, ...) {
 my_opts <- set_faker_opts(
   opt_simul_spec_character = opt_simul_spec_character(book = simul_spec_character_book)
 )
-sch <- schema_source("schema-books_5.yml", faker_opts = my_opts)
+sch <- schema_source(
+  system.file("extdata", "schema-books_5.yml", package = "DataFakeR"), 
+  faker_opts = my_opts
+)
 sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
@@ -114,7 +117,7 @@ default_faker_opts$opt_simul_restricted_integer
 #  )
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, "schema-books_6.yml")
+sch <- schema_update_source(sch, system.file("extdata", "schema-books_6.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
@@ -122,17 +125,17 @@ schema_get_table(sch, "books")
 default_faker_opts$opt_simul_restricted_character$in_set
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, "schema-books_7.yml")
+sch <- schema_update_source(sch, system.file("extdata", "schema-books_7.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, "schema-books_8.yml")
+sch <- schema_update_source(sch, system.file("extdata", "schema-books_8.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "books")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, "schema-books_9.yml")
+sch <- schema_update_source(sch, system.file("extdata", "schema-books_9.yml", package = "DataFakeR"))
 schema_plot_deps(sch)
 
 ## -----------------------------------------------------------------------------

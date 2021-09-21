@@ -51,7 +51,6 @@ simul_restricted_date_fkey(
   not_null,
   unique,
   default,
-  nchar,
   type,
   values,
   na_ratio,

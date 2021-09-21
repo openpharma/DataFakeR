@@ -34,9 +34,9 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 unique_sample(rnorm(n, mean = my_mean), n = 10, my_mean = 2)
 unique_sample(sample(values, size, replace = TRUE), size = 10, values = 1:10, n_name = "size")
 
-## Not run:
-## In 10 iteration it was not possible to simulate 6 unique values from the vector 1:5
-unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
+## Not run: 
+##D   ## In 10 iterations it was not possible to simulate 6 unique values from the vector 1:5
+##D   unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
 ## End(Not run)
 
 na_rand(1:10, na_ratio = 0.5)

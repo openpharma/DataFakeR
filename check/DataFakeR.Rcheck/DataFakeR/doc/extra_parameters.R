@@ -17,17 +17,17 @@ set.seed(123)
 options(tibble.width = Inf)
 
 ## -----------------------------------------------------------------------------
-sch <- schema_source("schema-patient.yml")
+sch <- schema_source(system.file("extdata", "schema-patient.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "patient")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, file = "schema-patient_2.yml")
+sch <- schema_update_source(sch, file = system.file("extdata", "schema-patient_2.yml", package = "DataFakeR"))
 sch <- schema_simulate(sch)
 schema_get_table(sch, "patient")
 
 ## -----------------------------------------------------------------------------
-sch <- schema_update_source(sch, file = "schema-patient_3.yml")
+sch <- schema_update_source(sch, file = system.file("extdata", "schema-patient_3.yml", package = "DataFakeR"))
 schema_plot_deps(sch, "patient")
 
 ## -----------------------------------------------------------------------------
@@ -53,7 +53,11 @@ my_opts = set_faker_opts(
 )
 
 ## ----patient_deps-------------------------------------------------------------
-sch <- schema_update_source(sch, file = "schema-patient_4.yml", my_opts)
+sch <- schema_update_source(
+  sch, 
+  file = system.file("extdata", "schema-patient_4.yml", package = "DataFakeR"),
+  my_opts
+)
 sch <- schema_simulate(sch)
 schema_get_table(sch, "patient")
 
@@ -77,7 +81,11 @@ my_opts = set_faker_opts(
   )
 )
 
-sch <- schema_update_source(sch, file = "schema-patient_5.yml", my_opts)
+sch <- schema_update_source(
+  sch, 
+  file = system.file("extdata", "schema-patient_5.yml", package = "DataFakeR"), 
+  my_opts
+)
 sch <- schema_simulate(sch)
 schema_get_table(sch, "patient")
 

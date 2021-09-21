@@ -13,7 +13,7 @@
 --- re-building ‘simulation_methods.Rmd’ using rmarkdown
 Quitting from lines 77-81 (simulation_methods.Rmd) 
 Error: processing vignette 'simulation_methods.Rmd' failed with diagnostics:
-cannot open the connection
+Multiple schemas not supported
 --- failed re-building ‘simulation_methods.Rmd’
 
 --- re-building ‘simulation_options.Rmd’ using rmarkdown

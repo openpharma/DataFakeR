@@ -48,10 +48,10 @@ Collate: 'DataFaker-package.R' 'simulate_char_col.R'
         'schema_utils.R' 'schema_deps.R' 'schema_conf.R'
         'schema_source.R' 'schema_from_db.R' 'schema_from_list.R'
 NeedsCompilation: no
-Packaged: 2021-09-21 10:47:56 UTC; krystiai
+Packaged: 2021-09-21 11:45:35 UTC; krystiai
 Author: Krystian Igras [aut, cre],
   Kamil Wais [ctb],
   Adam Foryś [ctb],
   Adam Leśniewski [ctb],
   Paweł Kawski [ctb]
-Built: R 4.0.0; ; 2021-09-21 10:48:10 UTC; unix
+Built: R 4.0.0; ; 2021-09-21 11:45:50 UTC; unix

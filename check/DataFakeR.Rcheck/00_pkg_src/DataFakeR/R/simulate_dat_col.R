@@ -70,7 +70,7 @@ simul_restricted_date_range <- function(n, not_null, unique, default, type, rang
 
 #' @rdname simulation_methods_date
 #' @export
-simul_restricted_date_fkey <- function(n, not_null, unique, default, nchar, type, values, na_ratio, levels_ratio, ...) {
+simul_restricted_date_fkey <- function(n, not_null, unique, default, type, values, na_ratio, levels_ratio, ...) {
   # todo consider other options if related like distribution in the future
   if (isTRUE(not_null)) {
     values <- values[!is.na(values)]

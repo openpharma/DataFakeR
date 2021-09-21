@@ -116,62 +116,12 @@ Undefined global functions or variables:
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
-* checking Rd \usage sections ... WARNING
-Undocumented arguments in documentation object 'default_simulation_params'
-  ‘na_ratio’ ‘levels_ratio’
-
-Undocumented arguments in documentation object 'number_of_rows'
-  ‘n’ ‘force’ ‘ratio’ ‘total’
-
-Undocumented arguments in documentation object 'sample_modifiers'
-  ‘sample_vec’
-
-Undocumented arguments in documentation object 'schema_source'
-  ‘source’
-Documented arguments not in \usage in documentation object 'schema_source':
-  ‘db_conn’
-
-Undocumented arguments in documentation object 'simulation_methods_date'
-  ‘nchar’
-
-Undocumented arguments in documentation object 'sourcing_metadata'
-  ‘na_ratio’ ‘levels_ratio’
-
-Functions with \usage entries need to have the appropriate \alias
-entries, and all their arguments documented.
-The \usage entries must correspond to syntactically valid R code.
-See chapter ‘Writing R documentation files’ in the ‘Writing R
-Extensions’ manual.
+* checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
- WARNING
-‘qpdf’ is needed for checks on size reduction of PDFs
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... ERROR
-Running examples in ‘DataFakeR-Ex.R’ failed
-The error most likely occurred in:
-
-> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: sample_modifiers
-> ### Title: Modify sample with desired condition
-> ### Aliases: sample_modifiers unique_sample na_rand levels_rand
-> 
-> ### ** Examples
-> 
-> 
-> unique_sample(rnorm(n, mean = my_mean), n = 10, my_mean = 2)
- [1] 1.373546 2.183643 1.164371 3.595281 2.329508 1.179532 2.487429 2.738325
- [9] 2.575781 1.694612
-> unique_sample(sample(values, size, replace = TRUE), size = 10, values = 1:10, n_name = "size")
- [1]  9  5  1  4  3  6 10  2  8  7
-> 
-> ## Not run:
-> ## In 10 iteration it was not possible to simulate 6 unique values from the vector 1:5
-> unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
-Error in unique_sample(sample(values, size, replace = TRUE), size = 6,  : 
-  It wasn't possible to generate the unique sample. Please make sure sampling configuration is correct.
-Execution halted
+* checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
   Running ‘testthat.R’
@@ -194,7 +144,7 @@ Error(s) in re-building vignettes:
 --- re-building ‘simulation_methods.Rmd’ using rmarkdown
 Quitting from lines 77-81 (simulation_methods.Rmd) 
 Error: processing vignette 'simulation_methods.Rmd' failed with diagnostics:
-cannot open the connection
+Multiple schemas not supported
 --- failed re-building ‘simulation_methods.Rmd’
 
 --- re-building ‘simulation_options.Rmd’ using rmarkdown
@@ -212,4 +162,4 @@ Execution halted
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 1 ERROR, 3 WARNINGs, 2 NOTEs
+Status: 1 WARNING, 2 NOTEs

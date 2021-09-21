@@ -142,7 +142,8 @@ read_schema <- function(file, simpots = default_faker_opts) {
 #' preserving table dependencies and constraints.
 #'
 #'
-#' @param db_conn Connection to Redshift or Postgres database.
+#' @param source Connection to Redshift or Postgres database or path to YAML configuration file
+#' from which schema metadata should be sourced.
 #' When missing \code{file} defined file will be sourced if existing.
 #' @param schema Schema name from which the structure should be sourced.
 #' @param file Path to yaml file describing database schema, or target file when schema should be saved
