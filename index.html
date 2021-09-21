@@ -139,7 +139,7 @@
 <div id="configure-schema-yaml-structure" class="section level3">
 <h3 class="hasAnchor">
 <a href="#configure-schema-yaml-structure" class="anchor"></a>Configure schema YAML structure</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># schema-books.yml</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># schema_books.yml</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>public<span class="op">:</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span>tables<span class="op">:</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="st">    </span>books<span class="op">:</span></span>
@@ -224,7 +224,7 @@
 <a href="#source-schema-and-check-table-and-column-dependencies" class="anchor"></a>Source schema (and check table and column dependencies)</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"dfkr_verbose"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># set `dfkr_verbose` option to see the workflow progress</span>
-<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="st">"schema-books.yml"</span><span class="op">)</span></code></pre></div>
+<span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/schema_source.html">schema_source</a></span><span class="op">(</span><span class="st">"schema_books.yml"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/schema_methods.html">schema_plot_deps</a></span><span class="op">(</span><span class="va">sch</span><span class="op">)</span></code></pre></div>
 <p><img src="README_files/figure-gfm/tbls_dep-1.png" style="display: block; margin: auto;"></p>
@@ -324,7 +324,7 @@
 <p>There are two main ways to get help with <code>DataFakeR</code></p>
 <ol>
 <li>Reach the package author via email: <a href="mailto:krystian8207@gmail.com" class="email">krystian8207@gmail.com</a>.</li>
-<li>Post an issue on our GitHub page at <a href="https://github.com/openapharma/DataFakeR/issues" class="uri">https://github.com/openapharma/DataFakeR/issues</a>.</li>
+<li>Post an issue on our GitHub page at <a href="https://github.com/openpharma/DataFakeR/issues" class="uri">https://github.com/openpharma/DataFakeR/issues</a>.</li>
 </ol>
 </div>
 </div>

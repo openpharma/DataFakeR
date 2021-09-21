@@ -402,19 +402,17 @@ public:
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">default_faker_opts</span><span class="op">$</span><span class="va">opt_simul_spec_character</span>
 <span class="co">#&gt; $name</span>
-<span class="co">#&gt; function (n, not_null, unique, default, spec_params, na_ratio, </span>
-<span class="co">#&gt;     levels_ratio, ...) </span>
-<span class="co">#&gt; {</span>
-<span class="co">#&gt;     call_args &lt;- names(sys.call())</span>
-<span class="co">#&gt;     if (!"spec_params" %in% call_args) {</span>
-<span class="co">#&gt;         spec_params &lt;- list()</span>
-<span class="co">#&gt;     }</span>
-<span class="co">#&gt;     spec_params$n &lt;- n</span>
-<span class="co">#&gt;     unique_sample(do.call(charlatan::ch_name, spec_params), spec_params = spec_params, </span>
-<span class="co">#&gt;         unique = unique) %&gt;% levels_rand(unique = unique, levels_ratio = levels_ratio) %&gt;% </span>
-<span class="co">#&gt;         na_rand(not_null = not_null, na_ratio = na_ratio)</span>
+<span class="co">#&gt; function(n, not_null, unique, default, spec_params, na_ratio, levels_ratio, ...) {</span>
+<span class="co">#&gt;   call_args &lt;- names(sys.call())</span>
+<span class="co">#&gt;   if (!"spec_params" %in% call_args) {</span>
+<span class="co">#&gt;     spec_params &lt;- list()</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt;   spec_params$n &lt;- n</span>
+<span class="co">#&gt;   unique_sample(do.call(charlatan::ch_name, spec_params), spec_params = spec_params, unique = unique) %&gt;%</span>
+<span class="co">#&gt;     levels_rand(unique = unique, levels_ratio = levels_ratio) %&gt;%</span>
+<span class="co">#&gt;     na_rand(not_null = not_null, na_ratio = na_ratio)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x55812764e9f8&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5558a452b058&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></code></pre></div>
 <p>The <code>name</code> method was defined and we were able to use it in the simulation. Looking at the function body, we may see it uses <code><a href="https://docs.ropensci.org/charlatan/reference/ch_name.html">charlatan::ch_name</a></code> function to simulate human-readable names.</p>
 <p>What else can we spot regarding the method definition? The below points are worth notice:</p>
@@ -587,49 +585,54 @@ spec_params:
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">default_faker_opts</span><span class="op">$</span><span class="va">opt_simul_restricted_integer</span>
 <span class="co">#&gt; $f_key</span>
-<span class="co">#&gt; function (n, not_null, unique, default, type, values, na_ratio, </span>
-<span class="co">#&gt;     levels_ratio, ...) </span>
-<span class="co">#&gt; {</span>
-<span class="co">#&gt;     if (isTRUE(not_null)) {</span>
-<span class="co">#&gt;         values &lt;- values[!is.na(values)]</span>
-<span class="co">#&gt;     }</span>
-<span class="co">#&gt;     if (isTRUE(unique)) {</span>
-<span class="co">#&gt;         warning("Requested to simulate foreign key having unique values. Make sure config is correctly defined.")</span>
-<span class="co">#&gt;     }</span>
-<span class="co">#&gt;     sample(values, n, replace = !unique) %&gt;% na_rand(not_null = not_null, </span>
-<span class="co">#&gt;         na_ratio = na_ratio)</span>
+<span class="co">#&gt; function(n, not_null, unique, default, type, values, na_ratio, levels_ratio, ...) {</span>
+<span class="co">#&gt;   # todo consider other options if related like distribution in the future</span>
+<span class="co">#&gt;   if (isTRUE(not_null)) {</span>
+<span class="co">#&gt;     values &lt;- values[!is.na(values)]</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt;   if (isTRUE(unique)) {</span>
+<span class="co">#&gt;     warning("Requested to simulate foreign key having unique values. Make sure config is correctly defined.")</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt;   sample(values, n, replace = !unique) %&gt;%</span>
+<span class="co">#&gt;     na_rand(not_null = not_null, na_ratio = na_ratio)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x5581276381d8&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5558a444fca0&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $in_set</span>
-<span class="co">#&gt; function (n, not_null, unique, default, type, values, na_ratio, </span>
-<span class="co">#&gt;     levels_ratio, ...) </span>
-<span class="co">#&gt; {</span>
-<span class="co">#&gt;     if (!missing(values)) {</span>
-<span class="co">#&gt;         if (isTRUE(not_null)) {</span>
-<span class="co">#&gt;             values &lt;- values[!is.na(values)]</span>
-<span class="co">#&gt;         }</span>
-<span class="co">#&gt;         return(sample(values, n, replace = !unique) %&gt;% na_rand(not_null = not_null, </span>
-<span class="co">#&gt;             na_ratio = na_ratio))</span>
+<span class="co">#&gt; function(n, not_null, unique, default, type, values, na_ratio, levels_ratio, ...) {</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   if (!missing(values)) {</span>
+<span class="co">#&gt;     if (isTRUE(not_null)) {</span>
+<span class="co">#&gt;       values &lt;- values[!is.na(values)]</span>
 <span class="co">#&gt;     }</span>
-<span class="co">#&gt;     return(NULL)</span>
+<span class="co">#&gt;     return(</span>
+<span class="co">#&gt;       sample(values, n, replace = !unique) %&gt;%</span>
+<span class="co">#&gt;         na_rand(not_null = not_null, na_ratio = na_ratio)</span>
+<span class="co">#&gt;     )</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   return(NULL)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x558127639198&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5558a44442e8&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $range</span>
-<span class="co">#&gt; function (n, not_null, unique, default, type, range, na_ratio, </span>
-<span class="co">#&gt;     levels_ratio, ...) </span>
-<span class="co">#&gt; {</span>
-<span class="co">#&gt;     if (!missing(range)) {</span>
-<span class="co">#&gt;         return(unique_sample(round(stats::runif(n, range[1], </span>
-<span class="co">#&gt;             range[2])), range = range, n = n, unique = unique) %&gt;% </span>
-<span class="co">#&gt;             na_rand(not_null = not_null, na_ratio = na_ratio))</span>
-<span class="co">#&gt;     }</span>
-<span class="co">#&gt;     return(NULL)</span>
+<span class="co">#&gt; function(n, not_null, unique, default, type, range, na_ratio, levels_ratio, ...) {</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   if (!missing(range)) {</span>
+<span class="co">#&gt;     return(</span>
+<span class="co">#&gt;       unique_sample(</span>
+<span class="co">#&gt;         round(stats::runif(n, range[1], range[2])),</span>
+<span class="co">#&gt;         range = range, n = n, unique = unique</span>
+<span class="co">#&gt;       ) %&gt;%</span>
+<span class="co">#&gt;         na_rand(not_null = not_null, na_ratio = na_ratio)</span>
+<span class="co">#&gt;     )</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   return(NULL)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x558127635b58&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5558a43f3f68&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></code></pre></div>
 <p>We can see there are three methods defined:</p>
 <ul>
@@ -716,19 +719,21 @@ public:
 <p>Awesome! Let’s simulate now human-readable book genre from a set of defined values. We can achieve this using <code>in_set</code> method for character column type:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">default_faker_opts</span><span class="op">$</span><span class="va">opt_simul_restricted_character</span><span class="op">$</span><span class="va">in_set</span>
-<span class="co">#&gt; function (n, not_null, unique, default, nchar, type, values, </span>
-<span class="co">#&gt;     na_ratio, levels_ratio, ...) </span>
-<span class="co">#&gt; {</span>
-<span class="co">#&gt;     if (!missing(values)) {</span>
-<span class="co">#&gt;         if (isTRUE(not_null)) {</span>
-<span class="co">#&gt;             values &lt;- values[!is.na(values)]</span>
-<span class="co">#&gt;         }</span>
-<span class="co">#&gt;         return(sample(values, n, replace = !unique) %&gt;% na_rand(not_null = not_null, </span>
-<span class="co">#&gt;             na_ratio = na_ratio))</span>
+<span class="co">#&gt; function(n, not_null, unique, default, nchar, type, values, na_ratio, levels_ratio, ...) {</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   if (!missing(values)) {</span>
+<span class="co">#&gt;     if (isTRUE(not_null)) {</span>
+<span class="co">#&gt;       values &lt;- values[!is.na(values)]</span>
 <span class="co">#&gt;     }</span>
-<span class="co">#&gt;     return(NULL)</span>
+<span class="co">#&gt;     return(</span>
+<span class="co">#&gt;       sample(values, n, replace = !unique) %&gt;%</span>
+<span class="co">#&gt;         na_rand(not_null = not_null, na_ratio = na_ratio)</span>
+<span class="co">#&gt;     )</span>
+<span class="co">#&gt;   }</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   return(NULL)</span>
 <span class="co">#&gt; }</span>
-<span class="co">#&gt; &lt;bytecode: 0x55812764d2b8&gt;</span>
+<span class="co">#&gt; &lt;bytecode: 0x5558a4513758&gt;</span>
 <span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></code></pre></div>
 <p>So let’s assume we want the genre to be simulated from set: <code>Fantasy</code>, <code>Adventure</code>, <code>Horror</code>, <code>Romance</code>.</p>
 <p>Let’s define such set as possible <code>values</code> for <code>genre</code> column:</p>
