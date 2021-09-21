@@ -50,6 +50,7 @@ jobs:
           Sys.getenv("RENV_PATHS_ROOT")
           Sys.getenv("RENV_PATHS_LIBRARY")
           .libPaths()
+          library(magrittr)
         shell: Rscript {0}
 
       #- name: Check
