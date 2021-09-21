@@ -1,0 +1,31 @@
+public:
+  tables:
+    patients:
+      columns:
+        id:
+          type: serial
+        recovered:
+          type: boolean
+        alive:
+          type: boolean
+        mocked:
+          type: boolean
+          formula: !expr TRUE
+      primary_key:
+        patients_pkey:
+          columns:
+          - id
+    from_mocked:
+      columns:
+        id:
+          type: serial
+        mock:
+           type: boolean
+      foreign_keys:
+        table_from_mocked_fkey:
+          columns:
+          - mock
+          references:
+            columns:
+            - mocked
+            table: patients

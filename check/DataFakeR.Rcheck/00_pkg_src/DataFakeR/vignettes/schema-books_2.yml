@@ -1,0 +1,22 @@
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(8)
+        author:
+          type: varchar
+        title:
+          type: varchar
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)

@@ -1,0 +1,85 @@
+---
+title: "YAML schema structure"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{YAML schema structure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+library(DataFakeR)
+set.seed(123)
+options(tibble.width = Inf)
+```
+
+<style type="text/css">
+pre {
+  font-size: 10px
+}
+</style>
+
+In order to generate fake data you need to provide schema description in yaml format.
+The structure of the configuration file relects the structure of relational database. Such structure allows the package to detect inner and inter-table dependencies, more to that, makes the simulated data preserving original database assumptions.
+
+The schema can be automatically sourced from a database (see: [Structure from DB](./structure_from_db.html)) or you
+may configure such on your own.
+
+Such configuration file should have the below structure:
+<pre>
+public                                                       - schema name
+└── tables:                                                  - tables list
+    ├── table_a:                                             - name of the table
+    │   ├── ...                                              - additional <a href = "simulation_options.html#default-table-parameters">table-wise parameters</a>
+    │   ├── check_constraints:                               - list of table check constraints
+    │   │   └── constraint_name                              - unique name of the constraint 
+    │   │       ├── column: column_a2                        - column attached to the constraint (can be empty)
+    │   │       └── expression: !expr column_a2 == column_a1 - R expression describing constraint
+    │   ├── columns:                                         - list of table columns
+    │   │   ├── column_a1:                                   - name of the column
+    │   │   │   ├── type: char(8)                            - column type (obligatory, valid R class or sql type)
+    │   │   │   ├── not_null: true                           |
+    │   │   │   ├── unique: true                             | standard <a href = "simulation_options.html#default-column-type-parameters">column parameters</a> (optional)
+    │   │   │   └── ...                                      - <a href = "extra_parameters.html">extra</a> column parameters
+    │   │   └── column_a2:
+    │   │       └── type: numeric(4, 2)
+    │   └── primary_key:                                     - list of primary keys
+    │       └── pk_name:                                     - primary key unique name
+    │           └── columns:                                 - array of primary key columns
+    │               └── - column_a1                          - column name treated as primary key
+    └── table_b:
+        ├── columns:
+        │   ├── column_b1:
+        │   │   └── type: char(8)
+        │   └── column_b2:
+        │       └── type: boolean
+        └── foreign_keys:                                    - list of foreign keys
+            └── fk_name:                                     - unique foreign key name
+                ├── columns:                                 - array of foreign key columns
+                │   └── - column_b1                          - name of the table column beeing foreign key
+                └── references:                              - definition of foregin key reference
+                    ├── columns:                             - array of foreign key dependent columns
+                    │   └── - column_a1                      - name of dependent column
+                    └── table: table_a                       - name of dependent foreign key table
+</pre>
+
+Schema assumptions and limitations (possibly reduced in the future releases):
+
+- Only single column supported for each primary key. That means for each primary key name, `pk_name > columns` list must contain only a single column.
+- Only single column supported for each foreign key. That is, each foreign key name, `fk_name > columns` and `fk_name > references > columns` lists must contain only a single value.
+- Check constraints expression must be a valid R expression. In the future releases automatic convertion will be added.
+
+<!-- todo add working example here -->

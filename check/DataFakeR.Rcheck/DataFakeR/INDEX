@@ -1,0 +1,30 @@
+DataFakeR-package       Generate fake data based on provided schema
+                        specification
+default_simulation_params
+                        Setup default column type parameters
+fake_column             Schema graph_tbl with already faked data (if
+                        performed)
+faker_configuration     Default options for pulling metadata and data
+                        simulation
+number_of_rows          Methods for extracting number of target rows in
+                        simulation
+opt_default_table       Configure data simulation options
+restricted_simulation   Simulate data restricted by extra column
+                        parameters
+sample_modifiers        Modify sample with desired condition
+schema_methods          Schema object methods
+schema_source           Source schema file into dependency graph object
+simulation_methods_character
+                        Character type simulation methods
+simulation_methods_date
+                        Date type simulation methods
+simulation_methods_integer
+                        Integer type simulation methods
+simulation_methods_logical
+                        Logical type simulation methods
+simulation_methods_numeric
+                        Numeric type simulation methods
+sourcing_metadata       Specify YAML configuration options while
+                        pulling the schema from DB
+special_simulation      Set of functions defining special simulation
+                        methods for column and its type

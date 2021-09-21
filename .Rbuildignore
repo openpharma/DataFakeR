@@ -11,3 +11,5 @@ Dockerfile
 schema-books.yml
 schema.yml
 ^\.github$
+README_files
+README.Rmd

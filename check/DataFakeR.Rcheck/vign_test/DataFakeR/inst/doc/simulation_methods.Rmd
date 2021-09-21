@@ -1,0 +1,690 @@
+---
+title: "Simulation methods"
+author: "Krystian Igras"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Simulation methods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+library(DataFakeR)
+set.seed(123)
+options(tibble.width = Inf)
+```
+
+DataFakeR offers various methods for defining how exactly each column should be simulated.
+
+We can highlight the below four simulation method types:
+
+1. Deterministic (formula or constraint-based) simulation.
+2. Special method simulation.
+3. Restricted simulation.
+4. Default simulation.
+
+The package tries to simulate the column with each method, with preserving the order of the above list.
+
+That means, the package will try to simulate the column using special method first and when such method cannot be executed (the conditions for running such method are not met) then, the next method is applied. 
+More to that when one of the methods successfully generated the data, the following ones are skipped.
+
+The goal of this document is to describe each method providing required details and, if applied, provide an information how each method can be customized.
+
+### Deterministic (formula or constraint-based) simulation.
+
+Let's imagine we want to generate tables that reflects standard database used in the library.
+One of the tables used there, can be the one describing all the books owned by the library.
+
+The YAML configuration of such table can have a form:
+```
+# schema-books.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(12)
+        author:
+          type: varchar
+        title:
+          type: varchar
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+        purchase_id:
+          type: varchar
+```
+
+While running the standard simulation process we get the following result:
+```{r}
+set.seed(123)
+sch <- schema_source("schema-books.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+Even though many columns don't look realistic let's take care of `book_id` and `purchase_id` columns.
+From the rules followed in the library, we know that:
+
+- `book_id` is the concatenation of first 4 letters from `author`, `title` and `bought`,
+- `purchase_id` is concatenation of word 'purchase_' and column `bought` (such rule is checked by SQL `purchase_id = 'purchase_' || bought` check constraint).
+
+If we want to preserve such rules, we have two options:
+
+- store the rules as `check_constraints` rewritten in R code,
+- define `book_id` and `purchase_id` using formula.
+
+Let's describe `purchase_id` using the first method:
+
+```
+# schema-books_2.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(12)
+        author:
+          type: varchar
+        title:
+          type: varchar
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+```
+
+let's update the source and plot column dependencies:
+```{r}
+sch <- schema_update_source(sch, file = "schema-books_2.yml")
+schema_plot_deps(sch, "books")
+```
+
+As you can see DataFakeR detected dependency between `purchase_id` and `bought` column.
+More to that the package will assure `bought` column will be simulated before `purchase_id`.
+
+Let's take a quick look at the data:
+```{r}
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+As we can see check constraint rule was applied to correctly create `purchase_id` column.
+
+**Note:** Check constraint expressions are used to detect column dependency and to create the checked column, only when the ones are equality expressions (that means the expression contains `==` operator). Such expression assures the column definition is deterministic.
+In the future releases (depending on the user's needs) the check expression rule can be extended to the cases where expression constains `<` and `>` operators.
+
+Now let's take care to assure that `book_id` is the first 8 letters of concatenation of `author`, `title` and `bought`-year.
+Such example can be also described using check constraint, but we'll use a different method that opens various options for defining column rules.
+
+If you want to create a column using custom expression, you pass it as a `formula` parameter in yaml configuration file.
+In our case, we want `book_id` be created with expression `paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))`.
+Let's put it in configuration as `formula` parameter:
+
+```
+# schema-books_3.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(12)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+        title:
+          type: varchar
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+```
+
+Again, update the source and plot column dependencies:
+```{r}
+sch <- schema_update_source(sch, file = "schema-books_3.yml")
+schema_plot_deps(sch, "books")
+```
+
+The column dependencies are detected correctly. Let's move then to simulation step:
+
+```{r}
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+As we can see the result is again as expected.
+
+**Note**
+The formula expression is passed to `dplyr::mutate` in the implementation, which means you may use in the formula any dplyr-specific functions, such as `n()`.
+
+**Note**
+Formula-based column definition was classified as a 'Deterministic simulation' method, but you may also define formulas with random sampling inside. For example assuring that column `end_date` have values larger than `start_date` you may define: `formula: start_date + sample(1:10, dplyr::n(), replace = TRUE)`.
+
+### Special method simulation
+
+Let's take a look at the last simulated data:
+
+```{r}
+schema_get_table(sch, "books")
+```
+
+As we mentioned in the previous section, we're not happy with the result of multiple column values.
+In this section we'll take of the result of `author` and `title` columns.
+
+In case of `author` column, we'd like the values to be random, human readable names.
+Across R packages, there are many that offer such functionality. In case of DataFakeR, it's just enough to define `spec: name` for the column definition:
+
+```
+# schema-books_4.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(12)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+```
+
+Again, update the source and plot column dependencies:
+```{r}
+sch <- schema_update_source(sch, file = "schema-books_4.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+Voila!
+
+How does it work?
+
+Whenever you precise `spec` parameter to the column, DataFakeR will look for the simulation options if the special method with such name was defined.
+For the specific column type, such option is defined at `options$opt_simul_spec_<column-type>`.
+
+So for the default options and character column type, we have:
+```{r}
+default_faker_opts$opt_simul_spec_character
+```
+
+The `name` method was defined and we were able to use it in the simulation.
+Looking at the function body, we may see it uses `charlatan::ch_name` function to simulate human-readable names.
+
+What else can we spot regarding the method definition?
+The below points are worth notice:
+
+- the method have `n` parameter. This is obligatory parameter for each simulation method.
+- the method parameters also contain standard column ones from YAML file. Whenever you need access to column parameters, just define them while creating the method. DataFakeR passes all the column parameters (not only the default ones) to each method.
+- if the parameter is not directly defined in the function it's still possible to access all of them by parsing ellipsis (...). Please make sure ellipsis is always added as a function parameter.
+- by defining `spec_params` yaml configuration parameter you may access and parse them directly in the method definition. Such parameter allows to resolve conflicts with standard parameters names when duplication exist.
+
+Now, let's take care of preparing human-readable title.
+For this case we'll create our custom function. The titles will consist of combination of four words from predefined values:
+
+```{r}
+books <- function(n) {
+  first <- c("Learning", "Amusing", "Hiding", "Symbols", "Hunting", "Smile")
+  second <- c("Of", "On", "With", "From", "In", "Before")
+  third <- c("My", "Your", "The", "Common", "Mysterious", "A")
+  fourth <- c("Future", "South", "Technology", "Forest", "Storm", "Dreams")
+  paste(sample(first, n), sample(second, n), sample(third, n), sample(fourth, n))
+}
+```
+
+Let's check a few possible results:
+```{r}
+books(3)
+```
+
+Perfect!
+
+In order to present how `spec_params` can be used let's add an option to skip the second word in the result:
+
+```{r}
+books <- function(n, add_second = FALSE) {
+  first <- c("Learning", "Amusing", "Hiding", "Symbols", "Hunting", "Smile")
+  second <- c("Of", "On", "With", "From", "In", "Before")
+  third <- c("My", "Your", "The", "Common", "Mysterious", "A")
+  fourth <- c("Future", "South", "Technology", "Forest", "Storm", "Dreams")
+  second_res <- NULL
+  if (add_second) {
+    second_res <- sample(second, n, replace = TRUE)
+  }
+  paste(
+    sample(first, n, replace = TRUE), second_res, 
+    sample(third, n, replace = TRUE), sample(fourth, n, replace = TRUE)
+  )
+}
+```
+
+Now, let's create the final method to use in the workflow.
+
+The function needs to:
+
+- take `n` parameter, 
+- optional standard parameter `unique` (we'll use it to assure unique results are returned),
+- `spec_params` that allows us to modify special method parameters
+
+```{r}
+simul_spec_character_book <- function(n, unique, spec_params, ...) {
+  spec_params$n <- n
+  
+  DataFakeR::unique_sample(
+    do.call(books, spec_params), 
+    spec_params = spec_params, unique = unique
+  )
+}
+```
+
+Before we run the example, let's explain code blocks in function definition.
+
+We're evaluating `books` using `do.call`. That's why we need to store all the parameters in the list passed to `do.call`.
+The only missing one is `n`, so:
+```{r eval=FALSE}
+spec_params$n <- n
+```
+
+We allowed our method to respect `unique` parameter, that's why we want to assure the returned sample is unique.
+We may achieve this using `DataFakeR::unique_sample`.
+
+The function evaluates sampling expression multiple times, replacing duplicated values with the new ones.
+It's worth to mention some of the function parameters:
+
+- `sim_expr` - simulation expression to be evaluated,
+- `...` - parameters values used in `sim_expr`,
+- `unique` - if TRUE, the function will try to generate unique values,
+- `n_iter` - number of iteration to try generate unique value.
+
+So it's enough to define:
+```{r eval=FALSE}
+DataFakeR::unique_sample(
+  sim_expr = do.call(books, spec_params), 
+  spec_params = spec_params, unique = unique
+)
+```
+
+Let's modify configuration file with the `book` method (with using `spec_params` to simulate full title):
+
+```
+schema-books_5.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+```
+
+and define the new method in the package options:
+
+```{r}
+my_opts <- set_faker_opts(
+  opt_simul_spec_character = opt_simul_spec_character(book = simul_spec_character_book)
+)
+sch <- schema_source("schema-books_5.yml", faker_opts = my_opts)
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+
+```
+
+Great! We've managed to use our custom special method to simulate human-readable titles.
+
+For the last part of this section it's worth to mention the remaining special methods for each column type.
+For numeric, integer, logical and Date column classes, DataFakeR offer `spec: distr` method that allow to simulate column from the selected distribution.
+The method requires to provide:
+```
+spec_params:
+  method: <method-name>
+```
+where method name is the name of simulation function such as `rnorm`, `rbinom` etc.
+
+For example, in order to simulate the column from normal distribution with `mean = 10` and `sd = 5` we should define:
+
+```
+spec: distr
+spec_params:
+  method: rnorm
+  mean: 10
+  sd: 5
+```
+
+### Restricted simulation
+
+Restricted simulation methods allow to simulate data considering exceptional parameters defined for each column.
+
+Such parameters can be for example:
+
+- `values` - possible column values for the target column
+- `range` - possible column values range for the target column
+
+All the restricted methods offered by DataFakeR for column type are defined in `default_faker_opts$opt_simul_restricted_<column-type>`.
+
+Let's take a look what methods are offered for integer columns:
+
+```{r}
+default_faker_opts$opt_simul_restricted_integer
+```
+
+We can see there are three methods defined:
+
+- `f_key` - restricted method responsible for simulating foreign keys (we'll come back to this one in the last part of the section),
+- `range` - method taking `range` parameter. When `range` is missing `NULL` is returned, otherwise integers between `range[1]` and `range[2]` are returned,
+- `in_set`- method taking `values` parameter. When `values` is missing `NULL` is returned, otherwise sampled values from `values` are returned.
+
+Let's highlight the general rule for restricted methods used by the package (excluding `f_key` one):
+
+- each method has `n` as obligatory parameter that determines number of returned values,
+- standard column parameters (`not_null`, `unique`, `type`) are optional but respected,
+- the method usually have defined 'restriction' parameter that determines whether the method should be applied or not,
+- when restriction condition is not met (for example 'restriction' parameter is missing) the method should return `NULL`.
+
+The last point allows DataFakeR to scan across all the restriction methods. When a method returns `NULL` result, the package moves to simulate from the next method defined in `opt_simul_restricted_<column-type>` setting.
+
+Similar to special methods, you may also define a set of your custom restricted methods.
+You may achieve this by setting up new methods with:
+
+```{r eval=FALSE}
+set_faker_opts(
+  opt_simul_restricted_<column-type> = opt_simul_restricted_<column-type>(my_method = method, ...)
+)
+```
+
+**Note:** DataFakeR allow also to rewrite currently existing method. So whenever you need to rewrite for example `in_set` method, just specify it as above.
+
+Having the knowledge about restricted methods, let's use them to generate `amount` column from values between `1` and `99`.
+We'll do it by using range method for `amount` column:
+
+```
+# schema-books_6.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+          range: [1, 99]
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+
+```
+
+```{r}
+sch <- schema_update_source(sch, "schema-books_6.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+Awesome! Let's simulate now human-readable book genre from a set of defined values.
+We can achieve this using `in_set` method for character column type:
+
+```{r}
+default_faker_opts$opt_simul_restricted_character$in_set
+```
+
+So let's assume we want the genre to be simulated from set: `Fantasy`, `Adventure`, `Horror`, `Romance`.
+
+Let's define such set as possible `values` for `genre` column:
+
+```
+schema-books_7.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+          values: [Fantasy, Adventure, Horror, Romance]
+        bought:
+          type: date
+        amount:
+          type: smallint
+          range: [1, 99]
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+
+```
+
+```{r}
+sch <- schema_update_source(sch, "schema-books_7.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+Let's add the last improvement by specifying date range for books:
+
+```
+schema-books_8.yml
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+          values: [Fantasy, Adventure, Horror, Romance]
+        bought:
+          type: date
+          range: ['2020-01-02', '2021-06-01']
+        amount:
+          type: smallint
+          range: [1, 99]
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+
+```
+
+```{r}
+sch <- schema_update_source(sch, "schema-books_8.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+Here we are.
+
+For the last part of restricted methods, let's add a few words about `f_key` restricted method.
+
+As mentioned the method is responsible for simulating foreign key columns.
+When the column is defined in schema as a foreign key, DataFakeR will source possible values from the parent table and pass such values set as a `values` parameter to `f_key` method.
+
+Simulating foreign key will skip execution of the remaining restricted methods defined in options.
+
+To see it in action, let's extend our schema definition by adding a new `borrowed` table (let's also precise `nrows` for each table).
+
+```
+# schema-books_9.yml
+public:
+  tables:
+    books:
+      nrows: 10
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+          values: [Fantasy, Adventure, Horror, Romance]
+        bought:
+          type: date
+          range: ['2020-01-02', '2021-06-01']
+        amount:
+          type: smallint
+          range: [1, 99]
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)
+    borrowed:
+      nrows: 30
+      columns:
+        book_id:
+          type: char(8)
+        user_id:
+          type: char(10)
+      foreign_keys:
+        book_id_fkey:
+          columns: book_id
+          references:
+            columns: book_id
+            table: books
+```
+
+Let's update the file and check table dependencies:
+
+```{r}
+sch <- schema_update_source(sch, "schema-books_9.yml")
+schema_plot_deps(sch)
+```
+
+As shown, DataFakeR detected dependency between `books` and `borrowed`, and will generate `books` table first to get possible values for foreign key column.
+
+Let's simulate the data and compare simumlated book ids:
+
+```{r}
+sch <- schema_simulate(sch)
+schema_get_table(sch, "books")
+```
+
+```{r}
+unique(schema_get_table(sch, "borrowed")$book_id)
+```
+
+So the values were correctly inherited from parent table.
+
+## Default simulation
+
+When none of the above methods were applied DataFakeR will simulate the column using the default method.
+For each column type you may find the default methods defined at `default_faker_opts$default_faker_opts$opt_simul_default_fun_<column-type>`.
+
+In order to overwrite such method it's just enough to:
+
+```{r eval=FALSE}
+set_faker_opts(
+  opt_simul_default_fun_<column-type> = my_custom_method
+)
+```

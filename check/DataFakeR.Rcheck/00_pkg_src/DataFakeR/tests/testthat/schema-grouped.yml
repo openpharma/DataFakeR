@@ -1,0 +1,27 @@
+public:
+  tables:
+    meta:
+      nrows: 10
+      columns:
+        c2:
+          type: character
+          values: ["a", "b"]
+        c3:
+          type: character
+          formula: !expr paste(c2, 1:dplyr::n())
+          group_by: c2
+        c4:
+          type: character
+          formula: !expr paste(c2, 1:dplyr::n())
+    person:
+      nrows: 10
+      columns:
+        personal_name:
+           type: character varying(16)
+           not_null: true
+           values: [Name, Surname]
+        value:
+           type: character
+           spec: nsgroup
+           group_by: personal_name
+

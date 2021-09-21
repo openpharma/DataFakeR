@@ -1,0 +1,28 @@
+public:
+  tables:
+    books:
+      columns:
+        book_id:
+          type: char(8)
+          formula: !expr paste0(substr(author, 1, 4), substr(title, 1, 4), substr(bought, 1, 4))
+        author:
+          type: varchar
+          spec: name
+        title:
+          type: varchar
+          spec: book
+          spec_params:
+            add_second: true
+        genre:
+          type: varchar
+        bought:
+          type: date
+        amount:
+          type: smallint
+          range: [1, 99]
+        purchase_id:
+          type: varchar
+      check_constraints:
+        purchase_id_check:
+          column: purchase_id
+          expression: !expr purchase_id == paste0('purchase_', bought)

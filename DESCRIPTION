@@ -1,6 +1,6 @@
 Package: DataFakeR
 Type: Package
-Title: Generate Fake Data For Relational Databases
+Title: Generate Fake Data for Relational Databases
 Version: 0.1.2
 Authors@R: c(
             person(
@@ -32,7 +32,7 @@ Authors@R: c(
 Maintainer: Krystian Igras <krystian8207@gmail.com>
 Description: Based on provided database description and/or database connection
   generate data sample preserving source structure.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -40,17 +40,21 @@ Imports:
     purrr,
     tidygraph,
     dplyr (>= 1.0.0),
+    tibble,
     magrittr,
     glue,
     R6
 Suggests: 
     DBI,
     charlatan,
+    stringr,
+    stringi,
     rmarkdown,
     knitr,
     covr,
     lintr,
     httr,
+    mockery,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.1.1

@@ -1,0 +1,350 @@
+---
+title: "Extra parameters"
+author: "Krystian Igras"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Extra parameters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+library(DataFakeR)
+set.seed(123)
+options(tibble.width = Inf)
+```
+
+Most of the functionality offered by DataFakeR were described in the remaining vignettes.
+Goal of this section is to present additional options offered by DataFakeR that can make your data simulating workflow much easier.
+
+### Grouped simulation
+
+It is quite common that values of the column are strongly related to the groups defined by the other column values.
+
+Some of the examples may be the age of death that may differ between males and females.
+
+In order to allow simulating values based on groups designed by the other columns, `group_by` parameter was introduced.
+
+Let's see the below schema structure:
+
+```
+# schema-patient.yml
+public:
+  tables:
+    patient:
+      columns:
+        treatment_id:
+          type: varchar
+          formula: !expr paste0(patient_id, line_number)
+        patient_id:
+          type: char(8)
+        line_number: 
+          type: smallint
+        gender:
+          type: char(1)
+          values: [F, M]
+        biomarker:
+          type: numeric
+          range: [0, 1]
+```
+
+Let's simulate the data using the below definition:
+
+```{r}
+sch <- schema_source("schema-patient.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "patient")
+```
+
+Now we'd like to extend the definition following the below rules:
+
+1. For each `patient_id` we usually want to have more than one row (it allows us to analyze the patient in multiple treatment stages). 
+2. For each `patient_id`, `lineid` is the sequence starting from 1 to the number of patient rows.
+3. `gender` should be unique for each `patient_id` value.
+4. `biomarker` value should `mean = 0.5` for females and `mean = 0.6` for males.
+
+#### Rule no 1
+
+Let's start with condition 1. We may simply achieve this by providing possible `patient_id` values with unique number less than target number of rows.
+
+```
+# schema-patient_2.yml
+public:
+  tables:
+    patient:
+      columns:
+        treatment_id:
+          type: varchar
+          formula: !expr paste0(patient_id, line_number)
+        patient_id:
+          type: char(8)
+          values: [PTNT01ID, PTNT02ID, PTNT03ID]
+        line_number: 
+          type: smallint
+        gender:
+          type: char(1)
+          values: [F, M]
+        biomarker:
+          type: numeric
+          range: [0, 1]
+```
+
+Let's simulate the data using the below definition:
+
+```{r}
+sch <- schema_update_source(sch, file = "schema-patient_2.yml")
+sch <- schema_simulate(sch)
+schema_get_table(sch, "patient")
+```
+
+#### Rule no 2
+
+Now, we'd like to make sure `line_id` is a sequence `1:n`, where `n` is the number of rows for each patient.
+
+If we define `line_number` formula as `!expr 1:dplyr::n()`, the resulting column would be a sequence `1:n` where `n` is the number of table rows.
+There is an obvious need to apply grouping by `patient_id`.
+
+How can we achieve this in DataFakeR?
+
+It is enough to add `group_by: patient_id` parameter to `line_number`.
+
+Let's see it in action:
+
+```
+# schema-patient_3.yml
+public:
+  tables:
+    patient:
+      columns:
+        treatment_id:
+          type: varchar
+          formula: !expr paste0(patient_id, line_number)
+        patient_id:
+          type: char(8)
+          values: [PTNT01ID, PTNT02ID, PTNT03ID]
+        line_number: 
+          type: smallint
+          group_by: patient_id
+          formula: !expr 1:dplyr::n()
+        gender:
+          type: char(1)
+          values: [F, M]
+        biomarker:
+          type: numeric
+          range: [0, 1]
+```
+
+Looking at the dependency graph:
+
+```{r}
+sch <- schema_update_source(sch, file = "schema-patient_3.yml")
+schema_plot_deps(sch, "patient")
+```
+
+we can see, DataFakeR detected dependency between `patient_id` and `line_numer` column.
+
+`line_number` was also created according to our needs:
+
+```{r}
+sch <- schema_simulate(sch)
+schema_get_table(sch, "patient")
+```
+
+#### Rule no 3
+
+Now let's assure gender is unique for each patient.
+
+To achieve this, we'll have to group by `patient_id` and sample one value from `c("F", "M)` and repeat this with desired number of rows.
+
+We may again use the formula, but for the sake of the example we'll define custom restricted method.
+
+The method will be executed whenever `singular: true` parameter is provided to the column.
+
+```
+# schema-patient_4.yml
+public:
+  tables:
+    patient:
+      columns:
+        treatment_id:
+          type: varchar
+          formula: !expr paste0(patient_id, line_number)
+        patient_id:
+          type: char(8)
+          values: [PTNT01ID, PTNT02ID, PTNT03ID]
+        line_number: 
+          type: smallint
+          group_by: patient_id
+          formula: !expr 1:dplyr::n()
+        gender:
+          type: char(1)
+          values: [F, M]
+          singular: true
+          group_by: patient_id
+        biomarker:
+          type: numeric
+          range: [0, 1]
+```
+
+The method definition:
+
+```{r}
+singular_vals <- function(n, values, singular, ...) {
+
+  if (!missing(singular) && isTRUE(singular)) {
+    val <- sample(values, 1)
+    return(rep(val, n))
+  }
+
+  return(NULL)
+}
+```
+
+and add it to schema options:
+
+```{r}
+my_opts = set_faker_opts(
+  opt_simul_restricted_character = opt_simul_restricted_character(
+    singular = singular_vals
+  )
+)
+```
+
+Now we can start simulation:
+
+```{r patient_deps}
+sch <- schema_update_source(sch, file = "schema-patient_4.yml", my_opts)
+sch <- schema_simulate(sch)
+schema_get_table(sch, "patient")
+```
+
+Voila!
+
+#### Rule no 4
+
+We'd like to sample from normal distribution with a specific mean dependent on the gender value.
+
+Again we have a few options here. The simplest one would be to group `biomarker` by `gender` and use: 
+
+`formula: ifelse(gender == "F", rnorm(dplyr::n(), 0.5, 0.01), rnorm(dplyr::n(), 0.6, 0.01))`
+
+but we'll do it using a special method instead.
+
+The main issue we might have is how to access the group value from within the method.
+We shouldn't be worried. DataFakeR automatically passes the value as a `group_val` parameter.
+
+So let's try it out.
+
+Let's define spec method named `dep_sampl`:
+
+```
+# schema-patient_5.yml
+public:
+  tables:
+    patient:
+      columns:
+        treatment_id:
+          type: varchar
+          formula: !expr paste0(patient_id, line_number)
+        patient_id:
+          type: char(8)
+          values: [PTNT01ID, PTNT02ID, PTNT03ID]
+        line_number:
+          type: smallint
+          group_by: patient_id
+          formula: !expr 1:dplyr::n()
+        gender:
+          type: char(1)
+          values: [F, M]
+          singular: true
+          group_by: patient_id
+        biomarker:
+          type: numeric
+          range: [0, 1]
+          spec: dep_sampl
+          group_by: gender
+```
+
+Inside function definition let's add print line to see current `group_key` value:
+
+```{r ptntwo_deps}
+dep_sampl <- function(n, group_val, range, ...) {
+  print(group_val)
+  if (group_val == "M") {
+    pmax(pmin(rnorm(n, 0.6, 0.01), range[2]), range[1])
+  } else {
+    pmax(pmin(rnorm(n, 0.5, 0.01), range[2]), range[1])
+  }
+}
+
+my_opts = set_faker_opts(
+  opt_simul_spec_numeric = opt_simul_spec_numeric(
+    dep_sampl = dep_sampl
+  ),
+  # don't forget option from previous case
+  opt_simul_restricted_character = opt_simul_restricted_character(
+    singular = singular_vals
+  )
+)
+
+sch <- schema_update_source(sch, file = "schema-patient_5.yml", my_opts)
+sch <- schema_simulate(sch)
+schema_get_table(sch, "patient")
+
+```
+
+This way we achieved assumed goal.
+
+### Ratio of NA values
+
+Another extra parameter offered by DataFakeR is `na_ratio`.
+Na ratio allows to precise the ratio of how many NA values should the column have.
+
+For each simulation method the final sample is modified by [na_rand](../reference/sample_modifiers.html) function, that replaces desired ratio of values with `NA`s.
+Default `na_ratio` value is `0.05` but can be easily overwritten by `opt_default_` configuration, or passed directly in column definition.
+
+**Note** Whenever column have defined `not_null: true`, `na_rand` doesn't attach `NA` values to the sample.
+
+### Ratio of column values
+
+The last extra parameter offered by DataFakeR is `levels_ratio`.
+Levels ratio allows to precise how many unique values should the column have.
+
+For each simulation method (before the sample is modified by `na_rand`) the sample is modified by [levels_rand](../reference/sample_modifiers.html) function, that takes desired number of sample levels and resamples it using only provided levels.
+Default `levels_ratio` is `1` but can be easily overwritten by `opt_default_` configuration, or passed directly in column definition.
+
+**Note** Whenever column have defined `unique: true` or `levels_ratio: 1`, `levels_rand` doesn't modify the sample.
+
+### Remaining parameters
+
+There are a few parameters that can be configured to each column and be handled by
+[all the simulation methods](simulation_methods.html).
+
+Such parameters are:
+
+- `values` - The parameter keeps possible values for the simulated column,
+- `range` - Two-length parameter storing minimum and maximum value for simulated column (numeric, integer and date only),
+- `precision` - Precision of numeric column values,
+- `scale` - Scale of numeric column values,
+- `min_date`, `max_date` - minimal and maximal values for simulating date columns (overwritten by `range` when specified),
+- `format` - Date format of `min_date`, `max_date` and `range` in case of date columns (%Y-%m-%d by default),
+- `nchar` - Maximum number of characters for simulating character column (10 by default).
+
+Whenever any of the above parameters is defined as a parameter of column-type simulation method, such value can be used to 
+get more accurate result respecting the configuration.
+
+For example default character simulation method ([simul_default_character](../reference/simulation_methods_character.html)) takes an advantage of `nchar` parameter, but special method for simulating names don't ([simul_spec_character_name](../reference/simulation_methods_character.html)).

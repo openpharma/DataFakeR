@@ -1,0 +1,32 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+Warning message:
+package 'testthat' was built under R version 4.0.5 
+> library(mockery)
+> library(DataFakeR)
+> 
+> test_check("DataFakeR")
+══ Skipped tests ═══════════════════════════════════════════════════════════════
+• On CRAN (1)
+
+[ FAIL 0 | WARN 3 | SKIP 1 | PASS 58 ]
+> 
+> proc.time()
+   user  system elapsed 
+  2.741   1.245   2.664 

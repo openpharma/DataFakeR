@@ -1,0 +1,64 @@
+
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "DataFakeR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "DataFakeR-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('DataFakeR')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("sample_modifiers")
+> ### * sample_modifiers
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: sample_modifiers
+> ### Title: Modify sample with desired condition
+> ### Aliases: sample_modifiers unique_sample na_rand levels_rand
+> 
+> ### ** Examples
+> 
+> 
+> unique_sample(rnorm(n, mean = my_mean), n = 10, my_mean = 2)
+ [1] 1.373546 2.183643 1.164371 3.595281 2.329508 1.179532 2.487429 2.738325
+ [9] 2.575781 1.694612
+> unique_sample(sample(values, size, replace = TRUE), size = 10, values = 1:10, n_name = "size")
+ [1]  9  5  1  4  3  6 10  2  8  7
+> 
+> ## Not run:
+> ## In 10 iteration it was not possible to simulate 6 unique values from the vector 1:5
+> unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
+Error in unique_sample(sample(values, size, replace = TRUE), size = 6,  : 
+  It wasn't possible to generate the unique sample. Please make sure sampling configuration is correct.
+Execution halted

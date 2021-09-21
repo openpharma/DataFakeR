@@ -1,0 +1,159 @@
+---
+title: "Sourcing structure from database"
+author: "Krystian Igras"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sourcing structure from database}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+library(DataFakeR)
+set.seed(123)
+options(tibble.width = Inf)
+```
+
+When pulling schema structure directly from database, you may decide which schema information should be saved in the configuration yaml file.
+The proper configuration defined with `set_faker_opts` should be passed to `faker_opts` parameters of `schema_source` function:
+
+```{r eval=FALSE}
+schema <- source_schema(
+  source = conn,
+  schema = "public",
+  faker_opts = set_faker_opts(...)
+)
+```
+
+DataFakeR currently offers two configuration types:
+
+* column-type specific - allow to configure what type of information should be stored for each column type,
+* table specific - allow to configure what table information should be stored.
+
+### Column specific configuration
+
+The current version of DataFakeR package supports five types (R target types) of columns:
+
+* character
+* numeric
+* integer
+* logical
+* date
+
+Each column-type configuration is done by setting:
+
+```{r eval=FALSE}
+set_faker_opts(opt_pull_<type> = opt_pull_<type>(...))
+```
+
+The possible configurable parameters are (with supported types):
+
+* `values (all types)`	Should column unique values be sourced? If so the ones are stored as an array withing values parameter.
+* `max_uniq_to_pull (all types)` Pull unique values only when the distinct number of them is less than provided value. The parameter prevents for sourcing large amount of values to configuration file for example when dealing with ids column.
+* `nchar (character)`	Should maximum number of characters in column be pulled? Is so stored as nchar parameter in configuration YAML file.
+* `range	(numeric, integer, date)` Should column range be sourced? Is so stored as range parameter in configuration YAML file.
+* `na_ratio (all types)` Should column source ratio of NA values existing in the original column?
+
+The information stored by the above parameters may then be used in the [simulation methods](simulation_methods.html).
+
+The default parameters can be accessed respectively from `default_faker_opts` object, for example:
+
+character columns:
+```{r}
+default_faker_opts$opt_pull_character
+```
+
+means, by default we save in the existing column values only when number of its unique values is less than 10.
+We will be also storing maximum number of character for strings in column.
+
+integer columns:
+```{r}
+default_faker_opts$opt_pull_integer
+```
+
+means the same for sourcing possible values as for character type, more to that we will source the column values range.
+
+Such configuration for sample book authors table, may result with the below structure:
+
+ID|Author|Digest|
+|---|---|---|
+1|Miss Madelyn Crist MD|Digest A|
+2|Merritt Gislason IV|Digest A|
+3|Linton Botsford|Digest A|
+4|Isam Bins-Shanahan|Digest A|
+5|Ora Stark|Digest A|
+6|Priscila Auer|Digest A|
+7|Ms. Addie Grady DDS|Digest B|
+8|Dr. Wayman Halvorson V|Digest B|
+9|Kesha Legros|Digest B|
+10|Gay Hoppe|Digest B|
+11|Yolanda Greenholt|Digest B|
+
+```
+authors:
+  columns:
+    ID:
+      type: serial
+      unique: true
+      not_null: true
+      default: na.integer
+      range: [1, 11]
+    author:
+      type: varchar
+      unique: true
+      not_null: true
+      default: na.character
+      nchar: 23
+    digest:
+      type: varchar
+      unique: false
+      not_null: true
+      default: na.character
+      values: [Digest A, Digest B]
+      nchar: 8
+```
+
+- `type`, `unique`, `not_null` and `default` are always sourced,
+- range was sourced form integer column,
+- source table stored information only about two digests (what is less than 10) so the values are saved,
+- source table stored information about more than 10 authors (and ID's) so such information was not saved,
+- `nchar = 23` means max string length in the author column was 23 characters.
+
+If we want to not source `range` and `nchar` information just precise:
+
+```{r eval=FALSE}
+my_opts <- set_faker_opts(
+  opt_pull_integer = opt_pull_integer(range = FALSE),
+  opt_pull_character = opt_pull_character(nchar = FALSE)
+)
+```
+
+and pass `my_opts` to `faker_opts` parameter of `schema_source` function.
+
+### Table specific configuration
+
+Can be achieved by specifying `opt_pull_table` option with the method of the same name.
+
+In the current version of DataFakeR package only one parameter (`nrows`) can be configured, with the three values:
+
+- `exact` - the number of rows of original table will be stored (and saved in configuration as `nrows` value),
+- `ratio` - the ratio of rows for table across all the tables in schema will be stored (and saved in configuration as `nrows` value),
+- `none` - number of rows will not be sourced.
+
+Such information can be further used to define number of rows in simulated table (see [simulation options](simulation_options.html)).
+
+**Note:** In the future DataFakeR releases the option to define custom parameters will be enabled.

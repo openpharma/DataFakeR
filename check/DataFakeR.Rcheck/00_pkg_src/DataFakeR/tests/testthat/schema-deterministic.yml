@@ -1,0 +1,16 @@
+public:
+  tables:
+    t1:
+      check_constraints:
+        t1_c2_check:
+          column: c2
+          expression: !expr (c2 == c1 + 1.1)
+      columns:
+        c1:
+          not_null: true
+          type: numeric
+        c2:
+          type: numeric
+        c3:
+          type: numeric
+          formula: !expr 20

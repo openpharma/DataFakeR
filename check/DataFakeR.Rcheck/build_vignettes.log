@@ -1,0 +1,29 @@
+--- re-building ‘datafaker_workflow.Rmd’ using rmarkdown
+--- finished re-building ‘datafaker_workflow.Rmd’
+
+--- re-building ‘extra_parameters.Rmd’ using rmarkdown
+--- finished re-building ‘extra_parameters.Rmd’
+
+--- re-building ‘main.Rmd’ using rmarkdown
+--- finished re-building ‘main.Rmd’
+
+--- re-building ‘schema_structure.Rmd’ using rmarkdown
+--- finished re-building ‘schema_structure.Rmd’
+
+--- re-building ‘simulation_methods.Rmd’ using rmarkdown
+Quitting from lines 77-81 (simulation_methods.Rmd) 
+Error: processing vignette 'simulation_methods.Rmd' failed with diagnostics:
+cannot open the connection
+--- failed re-building ‘simulation_methods.Rmd’
+
+--- re-building ‘simulation_options.Rmd’ using rmarkdown
+--- finished re-building ‘simulation_options.Rmd’
+
+--- re-building ‘structure_from_db.Rmd’ using rmarkdown
+--- finished re-building ‘structure_from_db.Rmd’
+
+SUMMARY: processing the following file failed:
+  ‘simulation_methods.Rmd’
+
+Error: Vignette re-building failed.
+Execution halted

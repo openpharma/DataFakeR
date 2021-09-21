@@ -1,0 +1,57 @@
+---
+title: "Welcome to DataFakeR!"
+author: "Krystian Igras"
+date: "`r Sys.Date()`"
+output: github_document
+always_allow_html: yes
+vignette: >
+  %\VignetteIndexEntry{Welcome to DataFakeR!}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,        
+  echo = TRUE,         # echo code?
+  message = TRUE,     # Show messages
+  warning = TRUE,     # Show warnings
+  fig.width = 8,       # Default plot width
+  fig.height = 6,      # .... height
+  dpi = 200,           # Plot resolution
+  fig.align = "center"
+)
+knitr::opts_chunk$set()  # Figure alignment   
+```
+
+## <span style="color:blue"> DataFakeR 0.1.2 is now available\!</span>
+
+## Top Links
+
+- The main code repository is at [https://github.com/openpharma/DataFakeR](https://github.com/openpharma/DataFakeR).
+- Submit bugs and feature requests at [https://github.com/openpharma/DataFakeR/issues](https://github.com/openpharma/DataFakeR/issues)
+- The package Roadmap highlighting future development plans can be found at [https://github.com/openpharma/DataFakeR/projects/1](https://github.com/openpharma/DataFakeR/projects/1)
+
+## Pages
+
+Here is a list of our main package pages
+
+|Topic|Description|
+|:--------|:------|
+|[Home](https://openpharma.github.io/DataFakeR)|Main `DataFakeR` package website|
+|[Simulation workflow](datafaker_workflow.html)|High-level description of how `DataFakeR` works|
+|[Schema Structure](schema_structure.html)|Learn details of schema tables description|
+|[Sourcing schema structure from DB](structure_from_db.html)|Find out how `DataFakeR` sources schema structure from database and how to customize it|
+|[Simulation options](simulation_options.html)|Learn more about customization options such as default parameters and simulation methods|
+|[Simulating methods](simulation_methods.html)|Learn what simulation methods `DataFakeR` offers and how to create custom ones|
+|[Extra parameters](extra_parameters.html)|Check for extra `DataFakeR` features that allow to get even more sophisticated results|
+
+
+## Getting help
+
+There are two main ways to get help with `DataFakeR`
+
+1. Reach the package author via email: krystian8207@gmail.com.
+2. Post an issue on our GitHub page at [https://github.com/openapharma/DataFakeR/issues](https://github.com/openapharma/DataFakeR/issues).
