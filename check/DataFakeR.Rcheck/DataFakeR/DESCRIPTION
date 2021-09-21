@@ -40,7 +40,7 @@ Imports: yaml, purrr, tidygraph, dplyr (>= 1.0.0), tibble, magrittr,
 Suggests: DBI, charlatan, stringr, stringi, rmarkdown, knitr, covr,
         lintr, httr, mockery, testthat (>= 3.0.0)
 Config/testthat/edition: 3
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Collate: 'DataFaker-package.R' 'simulate_char_col.R'
         'simulate_num_col.R' 'simulate_int_col.R' 'simulate_lgl_col.R'
@@ -48,10 +48,10 @@ Collate: 'DataFaker-package.R' 'simulate_char_col.R'
         'schema_utils.R' 'schema_deps.R' 'schema_conf.R'
         'schema_source.R' 'schema_from_db.R' 'schema_from_list.R'
 NeedsCompilation: no
-Packaged: 2021-09-21 10:38:12 UTC; krystiai
+Packaged: 2021-09-21 10:47:56 UTC; krystiai
 Author: Krystian Igras [aut, cre],
   Kamil Wais [ctb],
   Adam Foryś [ctb],
   Adam Leśniewski [ctb],
   Paweł Kawski [ctb]
-Built: R 4.0.0; ; 2021-09-21 10:38:28 UTC; unix
+Built: R 4.0.0; ; 2021-09-21 10:48:10 UTC; unix

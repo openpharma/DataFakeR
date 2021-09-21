@@ -626,7 +626,7 @@ public:
 <span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt;         unique = unique) %&gt;% levels_rand(unique = unique, levels_ratio = levels_ratio) %&gt;% </span></span>
 <span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt;         na_rand(not_null = not_null, na_ratio = na_ratio)</span></span>
 <span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt; }</span></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; &lt;bytecode: 0x55a079189870&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; &lt;bytecode: 0x55f2a31fd2c0&gt;</span></span>
 <span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></span></code></pre></div>
 <p>The <code>name</code> method was defined and we were able to use it in the simulation. Looking at the function body, we may see it uses <code>charlatan::ch_name</code> function to simulate human-readable names.</p>
 <p>What else can we spot regarding the method definition? The below points are worth notice:</p>
@@ -792,7 +792,7 @@ spec_params:
 <span id="cb23-12"><a href="#cb23-12"></a><span class="co">#&gt;     sample(values, n, replace = !unique) %&gt;% na_rand(not_null = not_null, </span></span>
 <span id="cb23-13"><a href="#cb23-13"></a><span class="co">#&gt;         na_ratio = na_ratio)</span></span>
 <span id="cb23-14"><a href="#cb23-14"></a><span class="co">#&gt; }</span></span>
-<span id="cb23-15"><a href="#cb23-15"></a><span class="co">#&gt; &lt;bytecode: 0x55a079207210&gt;</span></span>
+<span id="cb23-15"><a href="#cb23-15"></a><span class="co">#&gt; &lt;bytecode: 0x55f2a327abb8&gt;</span></span>
 <span id="cb23-16"><a href="#cb23-16"></a><span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></span>
 <span id="cb23-17"><a href="#cb23-17"></a><span class="co">#&gt; </span></span>
 <span id="cb23-18"><a href="#cb23-18"></a><span class="co">#&gt; $in_set</span></span>
@@ -808,7 +808,7 @@ spec_params:
 <span id="cb23-28"><a href="#cb23-28"></a><span class="co">#&gt;     }</span></span>
 <span id="cb23-29"><a href="#cb23-29"></a><span class="co">#&gt;     return(NULL)</span></span>
 <span id="cb23-30"><a href="#cb23-30"></a><span class="co">#&gt; }</span></span>
-<span id="cb23-31"><a href="#cb23-31"></a><span class="co">#&gt; &lt;bytecode: 0x55a079209fd8&gt;</span></span>
+<span id="cb23-31"><a href="#cb23-31"></a><span class="co">#&gt; &lt;bytecode: 0x55f2a327d980&gt;</span></span>
 <span id="cb23-32"><a href="#cb23-32"></a><span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></span>
 <span id="cb23-33"><a href="#cb23-33"></a><span class="co">#&gt; </span></span>
 <span id="cb23-34"><a href="#cb23-34"></a><span class="co">#&gt; $range</span></span>
@@ -822,7 +822,7 @@ spec_params:
 <span id="cb23-42"><a href="#cb23-42"></a><span class="co">#&gt;     }</span></span>
 <span id="cb23-43"><a href="#cb23-43"></a><span class="co">#&gt;     return(NULL)</span></span>
 <span id="cb23-44"><a href="#cb23-44"></a><span class="co">#&gt; }</span></span>
-<span id="cb23-45"><a href="#cb23-45"></a><span class="co">#&gt; &lt;bytecode: 0x55a079208f00&gt;</span></span>
+<span id="cb23-45"><a href="#cb23-45"></a><span class="co">#&gt; &lt;bytecode: 0x55f2a327c870&gt;</span></span>
 <span id="cb23-46"><a href="#cb23-46"></a><span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></span></code></pre></div>
 <p>We can see there are three methods defined:</p>
 <ul>
@@ -916,7 +916,7 @@ public:
 <span id="cb27-11"><a href="#cb27-11"></a><span class="co">#&gt;     }</span></span>
 <span id="cb27-12"><a href="#cb27-12"></a><span class="co">#&gt;     return(NULL)</span></span>
 <span id="cb27-13"><a href="#cb27-13"></a><span class="co">#&gt; }</span></span>
-<span id="cb27-14"><a href="#cb27-14"></a><span class="co">#&gt; &lt;bytecode: 0x55a0791a90c8&gt;</span></span>
+<span id="cb27-14"><a href="#cb27-14"></a><span class="co">#&gt; &lt;bytecode: 0x55f2a321c220&gt;</span></span>
 <span id="cb27-15"><a href="#cb27-15"></a><span class="co">#&gt; &lt;environment: namespace:DataFakeR&gt;</span></span></code></pre></div>
 <p>So let’s assume we want the genre to be simulated from set: <code>Fantasy</code>, <code>Adventure</code>, <code>Horror</code>, <code>Romance</code>.</p>
 <p>Let’s define such set as possible <code>values</code> for <code>genre</code> column:</p>

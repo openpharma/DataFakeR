@@ -29,4 +29,4 @@ package 'testthat' was built under R version 4.0.5
 > 
 > proc.time()
    user  system elapsed 
-  2.741   1.245   2.664 
+  3.305   2.292   2.760 
