@@ -14,7 +14,7 @@ out <- paste(
   collapse = "\\n"
 )
 httr::PATCH(
-  url = "https://github.com/api/v3/projects/columns/cards/69293545",
+  url = "https://api.github.com/projects/columns/cards/69293545",
   add_headers(
     authorization = glue::glue("token {Sys.getenv('GITHUB_PAT')}"),
     accept = "application/vnd.github.inertia-preview+json"
