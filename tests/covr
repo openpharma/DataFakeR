@@ -1,5 +1,3 @@
-renv::activate()
-
 library(httr)
 pkgload::load_all()
 library(testthat)

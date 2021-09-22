@@ -47,7 +47,7 @@ jobs:
 
       - uses: krystian8207/actions/setup-renv@master
         with:
-          cache-version: 2
+          cache-version: 3
 
       - name: Check
         env:
@@ -63,7 +63,8 @@ jobs:
         shell: bash
 
       - name: Update test coverage
-        run: Rscript tests/covr
+        run: source("tests/covr")
+        shell: Rscript {0}
 
       - name: Upload check results
         if: failure()
