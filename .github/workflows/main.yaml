@@ -47,7 +47,7 @@ jobs:
 
       - uses: krystian8207/actions/setup-renv@master
         with:
-          cache-version: 4
+          cache-version: 5
 
       - name: Check
         env:
