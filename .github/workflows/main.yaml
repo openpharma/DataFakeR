@@ -45,14 +45,9 @@ jobs:
         run: |
           echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" >> /home/runner/work/DataFakeR/DataFakeR/.Rprofile
 
-      - uses: r-lib/actions/setup-renv@master
+      - uses: krystian8207/actions/setup-renv@master
         with:
           cache-version: 2
-
-      - name: Check cache path
-        run: |
-          system("echo ~/")
-          Sys.getenv("RENV_PATHS_CACHE")
 
       - name: Check
         env:
