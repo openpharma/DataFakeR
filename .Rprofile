@@ -1,10 +1,4 @@
-print(".Rprofile")
-Sys.getenv("R_LIBS_USER")
-Sys.getenv("HOME")
-Sys.getenv("RENV_PATHS_ROOT")
-Sys.getenv("RENV_PATHS_LIBRARY")
-.libPaths()
-
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-Sys.setenv(RENV_CONFIG_RSPM_ENABLED = FALSE)
-#source("renv/activate.R")
+if (Sys.getenv("USE_RENV", unset = "TRUE") == "TRUE") {
+  Sys.setenv(RENV_CONFIG_RSPM_ENABLED = FALSE)
+  source("renv/activate.R")
+}
