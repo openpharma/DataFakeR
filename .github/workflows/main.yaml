@@ -23,7 +23,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-   #   RENV_PATHS_ROOT: $HOME/.local/share/renv
+      RENV_PATHS_ROOT: /home/runner/.local/share/renv
 
     steps:
       - uses: actions/checkout@v2
@@ -42,8 +42,8 @@ jobs:
           sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
 
       # - uses: r-lib/actions/setup-renv@master
-      #   with:
-      #     cache-version: 2
+        with:
+          cache-version: 2
 
       - name: Check renv paths
         run: |
