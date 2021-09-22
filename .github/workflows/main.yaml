@@ -67,6 +67,9 @@ jobs:
         run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
         shell: bash
 
+      - name: Update test coverage
+        run: Rscript tests/covr
+
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@main

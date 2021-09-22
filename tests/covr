@@ -16,9 +16,9 @@ out <- paste(
   collapse = "\\n"
 )
 httr::PATCH(
-  url = "https://github.roche.com/api/v3/projects/columns/cards/27142",
+  url = "https://github.com/api/v3/projects/columns/cards/69293545",
   add_headers(
-    authorization = glue::glue("token {Sys.getenv('GH_TOKEN')}"),
+    authorization = glue::glue("token {Sys.getenv('GITHUB_PAT')}"),
     accept = "application/vnd.github.inertia-preview+json"
   ),
   body = glue::glue('{{"note": "{out}"}}')
