@@ -50,8 +50,6 @@ jobs:
         run: |
           Sys.getenv("R_LIBS_USER")
           Sys.getenv("HOME")
-          Sys.getenv("RENV_PATHS_ROOT")
-          Sys.getenv("RENV_PATHS_LIBRARY")
           .libPaths()
         shell: Rscript {0}
 
