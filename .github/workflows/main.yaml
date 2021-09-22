@@ -51,6 +51,7 @@ jobs:
           Sys.getenv("R_LIBS_USER")
           Sys.getenv("HOME")
           .libPaths()
+          library("magrittr")
         shell: Rscript {0}
 
       # - name: Check
