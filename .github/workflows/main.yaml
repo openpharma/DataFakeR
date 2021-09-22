@@ -43,13 +43,7 @@ jobs:
 
       - name: Setup CRAN mirror
         run: |
-          echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" >> ~/.Rprofile
-
-      - name: Check workdir
-        run: |
-          getwd()
-        shell: Rscript {0}
-
+          echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" >> /home/runner/work/DataFakeR/DataFakeR/.Rprofile
 
       - uses: r-lib/actions/setup-renv@master
         with:
