@@ -41,6 +41,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
 
+      - name: Setup CRAN mirror
+        run: |
+          echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" >> ~/.Rprofile
+
       - uses: r-lib/actions/setup-renv@master
         with:
           cache-version: 2
