@@ -51,7 +51,7 @@ jobs:
 
       - name: Check cache path
         run: |
-          system("echo ~./")
+          system("echo ~/")
           Sys.getenv("RENV_PATHS_CACHE")
 
       - name: Check
