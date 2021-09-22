@@ -49,6 +49,11 @@ jobs:
         with:
           cache-version: 2
 
+      - name: Check cache path
+        run: |
+          system("echo ~./")
+          Sys.getenv("RENV_PATHS_CACHE")
+
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false

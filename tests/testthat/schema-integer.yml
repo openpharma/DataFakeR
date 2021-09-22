@@ -4,6 +4,7 @@ public:
       columns:
         id:
           type: serial
+          unique: true
         age:
           type: smallint
           range: [10, 90]
