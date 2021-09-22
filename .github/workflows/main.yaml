@@ -45,6 +45,12 @@ jobs:
         run: |
           echo "options(repos = c(CRAN = 'https://cloud.r-project.org'))" >> ~/.Rprofile
 
+      - name: Check workdir
+        run: |
+          getwd()
+        shell: Rscript {0}
+
+
       - uses: r-lib/actions/setup-renv@master
         with:
           cache-version: 2
