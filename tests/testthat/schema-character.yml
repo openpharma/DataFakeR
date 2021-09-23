@@ -8,6 +8,7 @@ public:
       columns:
         id:
           not_null: true
+          unique: true
           type: char(8)
         description:
           type: varchar(18)
@@ -41,6 +42,7 @@ public:
       columns:
         author:
            not_null: true
+           unique: true
            type: text
            spec: name
         job:

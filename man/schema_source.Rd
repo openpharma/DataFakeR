@@ -12,15 +12,16 @@ schema_source(
 )
 }
 \arguments{
+\item{source}{Connection to Redshift or Postgres database or path to YAML configuration file
+from which schema metadata should be sourced.
+When missing \code{file} defined file will be sourced if existing.}
+
 \item{schema}{Schema name from which the structure should be sourced.}
 
 \item{file}{Path to yaml file describing database schema, or target file when schema should be saved
 (when \code{db_conn} not mising). See \code{vignette('todo')}.}
 
 \item{faker_opts}{Structure sourcing and columns simulation config.}
-
-\item{db_conn}{Connection to Redshift or Postgres database.
-When missing \code{file} defined file will be sourced if existing.}
 }
 \description{
 The functions parses table schema (from database) and saves its structure yaml format.

@@ -19,7 +19,7 @@ NULL
 simul_spec_logical_distr <- function(n, not_null, unique, default, spec_params, na_ratio, levels_ratio, ...) {
   call_args <- names(sys.call())
   if (!"spec_params" %in% call_args) {
-    stop(glue(
+    stop(glue::glue(
       "{sQuote('distr')} spec method for numerical columns requires {sQuote('spec_params')} defined"
     ))
   }

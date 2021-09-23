@@ -24,6 +24,8 @@ levels_rand(sample_vec, levels_ratio, unique)
 
 \item{n_iter}{Number of iteration to make to assure the returned values are unique.}
 
+\item{sample_vec}{Vector to which NA values should be injected.}
+
 \item{na_ratio}{Ratio (in terms of column length) of NA values to attach to the sample.}
 
 \item{not_null}{Information whether NA's are allowed.}
@@ -43,10 +45,10 @@ The set of function that allows to perform most common operations ion data sampl
 unique_sample(rnorm(n, mean = my_mean), n = 10, my_mean = 2)
 unique_sample(sample(values, size, replace = TRUE), size = 10, values = 1:10, n_name = "size")
 
-## Not run:
-## In 10 iteration it was not possible to simulate 6 unique values from the vector 1:5
-unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
-## End(Not run)
+\dontrun{
+  ## In 10 iterations it was not possible to simulate 6 unique values from the vector 1:5
+  unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
+}
 
 na_rand(1:10, na_ratio = 0.5)
 

@@ -20,7 +20,7 @@ NULL
 simul_spec_numeric_distr <- function(n, not_null, unique, default, spec_params, na_ratio, levels_ratio, ...) {
   call_args <- names(sys.call())
   if (!"spec_params" %in% call_args) {
-    stop(glue(
+    stop(glue::glue(
       "{sQuote('distr')} spec method for numerical columns requires {sQuote('spec_params')} defined"
     ))
   }
@@ -48,7 +48,7 @@ simul_default_numeric <- function(n, not_null, unique, default, type, na_ratio, 
     # todo handle unique
     return(
       unique_sample(
-        round(10^(precision - scale) * runif(n), scale),
+        round(10^(precision - scale) * stats::runif(n), scale),
         precision = precision, scale = scale, n = n, unique = unique
       ) %>%
         levels_rand(unique = unique, levels_ratio = levels_ratio) %>%
@@ -61,7 +61,7 @@ simul_default_numeric <- function(n, not_null, unique, default, type, na_ratio, 
   scale <- params$scale
   return(
     unique_sample(
-      round(10^(precision - scale) * runif(n), scale),
+      round(10^(precision - scale) * stats::runif(n), scale),
       precision = precision, scale = scale, n = n, unique = unique
     ) %>%
       levels_rand(unique = unique, levels_ratio = levels_ratio) %>%
@@ -77,7 +77,7 @@ simul_restricted_numeric_range <- function(n, not_null, unique, default, type, r
   if (!missing(range)) {
     return(
       unique_sample(
-        runif(n, range[1], range[2]),
+        stats::runif(n, range[1], range[2]),
         range = range, n = n, unique = unique
       ) %>%
         levels_rand(unique = unique, levels_ratio = levels_ratio) %>%

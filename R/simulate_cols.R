@@ -233,7 +233,7 @@ get_col_params <- function(col_def, schema, faker_opts) {
     }
   }
 
-  modifyList(default_opts, col_def)
+  utils::modifyList(default_opts, col_def)
 }
 
 #' Schema graph_tbl with already faked data (if performed)
@@ -286,16 +286,17 @@ fake_column <- function(n, col_def, schema, faker_opts) {
 #' @param na_ratio Ratio (in terms of column length) of NA values to attach to the sample.
 #' @param not_null Information whether NA's are allowed.
 #' @param levels_ratio Ratio of unique levels in terms of whole sample length.
+#' @param sample_vec Vector to which NA values should be injected.
 #'
 #' @examples
 #'
 #' unique_sample(rnorm(n, mean = my_mean), n = 10, my_mean = 2)
 #' unique_sample(sample(values, size, replace = TRUE), size = 10, values = 1:10, n_name = "size")
 #'
-#' ## Not run:
-#' ## In 10 iteration it was not possible to simulate 6 unique values from the vector 1:5
-#' unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
-#' ## End(Not run)
+#' \dontrun{
+#'   ## In 10 iterations it was not possible to simulate 6 unique values from the vector 1:5
+#'   unique_sample(sample(values, size, replace = TRUE), size = 6, values = 1:5, n_name = "size")
+#' }
 #'
 #' na_rand(1:10, na_ratio = 0.5)
 #'

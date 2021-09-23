@@ -33,7 +33,7 @@ the package functionality.
 
 ### Configure schema YAML structure
 
-    # schema-books.yml
+    # schema_books.yml
     public:
       tables:
         books:
@@ -117,7 +117,7 @@ set_faker_opts(
 
 ``` r
 options("dfkr_verbose" = TRUE) # set `dfkr_verbose` option to see the workflow progress
-sch <- schema_source("schema-books.yml")
+sch <- schema_source("schema_books.yml")
 ```
 
 ``` r
@@ -220,8 +220,7 @@ Special thanks to:
 ## Lifecycle
 
 DataFakeR 0.1.2 is at experimental stage. If you find bugs or post an
-issue on GitHub page at
-<https://github.com/openapharma/DataFakeR/issues>
+issue on GitHub page at <https://github.com/openpharma/DataFakeR/issues>
 
 ## Getting help
 
@@ -229,4 +228,4 @@ There are two main ways to get help with `DataFakeR`
 
 1.  Reach the package author via email: <krystian8207@gmail.com>.
 2.  Post an issue on our GitHub page at
-    <https://github.com/openapharma/DataFakeR/issues>.
+    <https://github.com/openpharma/DataFakeR/issues>.
