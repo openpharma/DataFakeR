@@ -13,3 +13,6 @@ schema.yml
 ^\.github$
 README_files
 README.Rmd
+.RProfile
+cran-comments.md
+

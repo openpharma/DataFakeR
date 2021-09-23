@@ -6,3 +6,5 @@ inst/doc
 schema.yml
 public
 check
+.Renviron
+
