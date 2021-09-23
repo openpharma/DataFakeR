@@ -17,8 +17,18 @@ data preserving specified assumptions about the original one.
 
 ## Installation
 
+  - from CRAN
+
+<!-- end list -->
+
+    install.packages("DataFakeR")
+
+  - latest version from Github
+
+<!-- end list -->
+
     remotes::install_github(
-      "openpharma/DatFakeR"
+      "openpharma/DataFakeR"
     )
 
 ## Learning DataFakeR

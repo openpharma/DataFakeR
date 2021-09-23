@@ -36,9 +36,17 @@ DataFakeR is an R package designed to help you generate sample of fake data pres
 
 ## Installation
 
+- from CRAN
+
+```
+install.packages("DataFakeR")
+```
+
+- latest version from Github
+
 ```
 remotes::install_github(
-  "openpharma/DatFakeR"
+  "openpharma/DataFakeR"
 )
 ```
 
