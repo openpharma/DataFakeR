@@ -40,7 +40,7 @@ Here is a list of our main package pages
 
 |Topic|Description|
 |:--------|:------|
-|[Home](https://openpharma.github.io/DataFakeR)|Main `DataFakeR` package website|
+|[Home](https://openpharma.github.io/DataFakeR/)|Main `DataFakeR` package website|
 |[Simulation workflow](datafaker_workflow.html)|High-level description of how `DataFakeR` works|
 |[Schema Structure](schema_structure.html)|Learn details of schema tables description|
 |[Sourcing schema structure from DB](structure_from_db.html)|Find out how `DataFakeR` sources schema structure from database and how to customize it|
