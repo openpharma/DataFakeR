@@ -2,7 +2,7 @@
 # DataFakeR <img src="README_files/figure-gfm/logo.png" align="right" width="120" />
 
 [![version](https://img.shields.io/static/v1.svg?label=github.com&message=v.0.1.2&color=ff69b4)](https://openpharma.github.io/DataFakeR/)
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-success.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-success.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 ## Overview
 
@@ -17,8 +17,18 @@ data preserving specified assumptions about the original one.
 
 ## Installation
 
+  - from CRAN
+
+<!-- end list -->
+
+    install.packages("DataFakeR")
+
+  - latest version from Github
+
+<!-- end list -->
+
     remotes::install_github(
-      "openpharma/DatFakeR"
+      "openpharma/DataFakeR"
     )
 
 ## Learning DataFakeR
