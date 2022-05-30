@@ -75,3 +75,4 @@ Collate:
     'schema_source.R'
     'schema_from_db.R'
     'schema_from_list.R'
+URL: https://github.com/openpharma/DataFakeR
