@@ -154,7 +154,8 @@ prepare_expression <- function(expr) {
     return(expr)
   }
 
-  purrr::modify(expr, prepare_expression)
+  expr[] <- lapply(expr, prepare_expression)
+  expr
 }
 
 extract_col_expression <- function(col_def, schema) {
