@@ -567,3 +567,8 @@ set_faker_opts <- function(
   }
   current_opts
 }
+
+#' @export
+get_faker_opts <- function() {
+  getOption("dfkr_options")
+}
