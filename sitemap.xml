@@ -1,78 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//index.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/404.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/DataFakeR-package.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/default_simulation_params.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/datafaker_workflow.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/fake_column.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/extra_parameters.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/faker_configuration.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/number_of_rows.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/main.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/opt_default_table.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/schema_structure.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/restricted_simulation.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/simulation_methods.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/sample_modifiers.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/simulation_options.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/schema_methods.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/articles/structure_from_db.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/schema_source.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/authors.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/simulation_methods_character.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/index.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/simulation_methods_date.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/news/index.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/simulation_methods_integer.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/pull_request_template.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/simulation_methods_logical.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/DataFakeR-package.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/simulation_methods_numeric.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/default_simulation_params.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/sourcing_metadata.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/fake_column.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//reference/special_simulation.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/faker_configuration.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/datafaker_workflow.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/extra_parameters.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/number_of_rows.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/main.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/opt_default_table.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/schema_structure.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/restricted_simulation.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/simulation_methods.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/sample_modifiers.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/simulation_options.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/schema_methods.html</loc>
   </url>
   <url>
-    <loc>https://openpharma.github.io/DataFakeR//articles/structure_from_db.html</loc>
+    <loc>https://openpharma.github.io/DataFakeR/reference/schema_source.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/simulation_methods_character.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/simulation_methods_date.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/simulation_methods_integer.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/simulation_methods_logical.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/simulation_methods_numeric.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/sourcing_metadata.html</loc>
+  </url>
+  <url>
+    <loc>https://openpharma.github.io/DataFakeR/reference/special_simulation.html</loc>
   </url>
 </urlset>

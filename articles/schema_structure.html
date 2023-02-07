@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YAML schema structure • DataFakeR</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,12 +19,15 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="YAML schema structure">
 <meta property="og:description" content="DataFakeR">
+<meta property="og:image" content="https://openpharma.github.io/DataFakeR/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,14 +40,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DataFakeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-thumbs-o-up"></span>
      
     Articles
@@ -84,14 +93,21 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/openpharma/DataFakeR/issues">
+  <a href="https://github.com/openpharma/DataFakeR/issues" class="external-link">
     <span class="fa fa-ambulance"></span>
      
     Issues
   </a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/openpharma/DataFakeR/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -101,13 +117,13 @@
 
       
 
-      </header><script src="schema_structure_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>YAML schema structure</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/openpharma/DataFakeR/blob/HEAD/vignettes/schema_structure.Rmd" class="external-link"><code>vignettes/schema_structure.Rmd</code></a></small>
       <div class="hidden name"><code>schema_structure.Rmd</code></div>
 
     </div>
@@ -119,8 +135,13 @@ pre {
   font-size: 10px
 }
 </style>
-<p>In order to generate fake data you need to provide schema description in yaml format. The structure of the configuration file relects the structure of relational database. Such structure allows the package to detect inner and inter-table dependencies, more to that, makes the simulated data preserving original database assumptions.</p>
-<p>The schema can be automatically sourced from a database (see: <a href="./structure_from_db.html">Structure from DB</a>) or you may configure such on your own.</p>
+<p>In order to generate fake data you need to provide schema description
+in yaml format. The structure of the configuration file relects the
+structure of relational database. Such structure allows the package to
+detect inner and inter-table dependencies, more to that, makes the
+simulated data preserving original database assumptions.</p>
+<p>The schema can be automatically sourced from a database (see: <a href="./structure_from_db.html">Structure from DB</a>) or you may
+configure such on your own.</p>
 Such configuration file should have the below structure:
 <pre>
 public                                                       - schema name
@@ -158,11 +179,18 @@ public                                                       - schema name
                     │   └── - column_a1                      - name of dependent column
                     └── table: table_a                       - name of dependent foreign key table
 </pre>
-<p>Schema assumptions and limitations (possibly reduced in the future releases):</p>
+<p>Schema assumptions and limitations (possibly reduced in the future
+releases):</p>
 <ul>
-<li>Only single column supported for each primary key. That means for each primary key name, <code>pk_name &gt; columns</code> list must contain only a single column.</li>
-<li>Only single column supported for each foreign key. That is, each foreign key name, <code>fk_name &gt; columns</code> and <code>fk_name &gt; references &gt; columns</code> lists must contain only a single value.</li>
-<li>Check constraints expression must be a valid R expression. In the future releases automatic convertion will be added.</li>
+<li>Only single column supported for each primary key. That means for
+each primary key name, <code>pk_name &gt; columns</code> list must
+contain only a single column.</li>
+<li>Only single column supported for each foreign key. That is, each
+foreign key name, <code>fk_name &gt; columns</code> and
+<code>fk_name &gt; references &gt; columns</code> lists must contain
+only a single value.</li>
+<li>Check constraints expression must be a valid R expression. In the
+future releases automatic convertion will be added.</li>
 </ul>
 <!-- todo add working example here -->
 </div>
@@ -176,11 +204,13 @@ public                                                       - schema name
 
 
       <footer><div class="copyright">
-  <p>Developed by Krystian Igras.</p>
+  <p></p>
+<p>Developed by Krystian Igras.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -188,6 +218,8 @@ public                                                       - schema name
 
   
 
+
+  
 
   </body>
 </html>
