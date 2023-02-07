@@ -10,6 +10,14 @@ nrows_simul_constant(n, force = FALSE)
 
 nrows_simul_ratio(ratio, total, force = FALSE)
 }
+\arguments{
+\item{n}{Default number of rows for each table when not defined in configuration file.}
+
+\item{force}{Should specified parameters overwrite related configuration parameters?}
+
+\item{ratio, total}{The parameters multiplications results with defining target
+number of rows for simulated table. See details section.}
+}
 \description{
 Each method returns function of list of tables.
 The value of such function is named list being mapping between tables

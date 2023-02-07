@@ -12,6 +12,8 @@
 #' @param not_null Should the column allow to simulate NA values?
 #' @param unique Should column values be unique?
 #' @param default Default column value. Ignored during simulation.
+#' @param na_ratio Ratio of NA values returned in simulated sample.
+#' @param levels_ratio Ratio of unique values (in terms of sample length) simulated in the sample.
 #' @param precision Precision of numeric column value when simulating numeric values.
 #'   When source column is of type e.g. \code{numeric(precision)} the parameter is ignored.
 #' @param scale Precision of numeric column value when simulating numeric values.
@@ -155,6 +157,10 @@ opt_default_table <- function(nrows = nrows_simul_constant(10)) {
 #'   }
 #' }
 #'
+#' @param n Default number of rows for each table when not defined in configuration file.
+#' @param ratio,total The parameters multiplications results with defining target
+#'   number of rows for simulated table. See details section.
+#' @param force Should specified parameters overwrite related configuration parameters?
 #' @name number_of_rows
 NULL
 
@@ -397,6 +403,8 @@ opt_simul_restricted_date <- function(f_key = simul_restricted_integer_fkey,
 #' for example when dealing with ids column.
 #' @param nchar Should maximum number of characters in column be pulled? Is so stored as
 #' \code{nchar} parameter in configuration YAML file.
+#' @param na_ratio Should ratio of NA values existing in column be sourced?
+#' @param levels_ratio Should ratio of unique column values be sourced?
 #' @param range Should column range be sourced? Is so stored as \code{range} parameter in
 #' configuration YAML file.
 #' @param precision Currently unused.

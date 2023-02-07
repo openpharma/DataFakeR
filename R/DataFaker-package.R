@@ -3,6 +3,10 @@
 #' @name DataFakeR-package
 #' @importFrom magrittr %>%
 
-globalVariables(c(":=", "!!", ".data", "nodes"))
+globalVariables(c(
+  ":=", "!!", ".", "from", "to", ".data", "nodes",
+  "nchars", "vals", "val", "constraint_type", "table_name",
+  "unique_constraint_name", "column_name", "name"
+))
 
 NULL

@@ -97,6 +97,7 @@ read_schema_file <- function(file) {
     input = file,
     handlers = list(expr = function(x) parse(text = x))
   )
+
   if (length(schema) != 1) {
     stop("Multiple schemas not supported")
   }
@@ -142,7 +143,8 @@ read_schema <- function(file, simpots = default_faker_opts) {
 #' preserving table dependencies and constraints.
 #'
 #'
-#' @param db_conn Connection to Redshift or Postgres database.
+#' @param source Connection to Redshift or Postgres database or path to YAML configuration file
+#' from which schema metadata should be sourced.
 #' When missing \code{file} defined file will be sourced if existing.
 #' @param schema Schema name from which the structure should be sourced.
 #' @param file Path to yaml file describing database schema, or target file when schema should be saved
@@ -261,7 +263,7 @@ pull_column_data_info <- function(source, column_name, column_info, options) {
 
 get_column_conf <- function(column_name, source, pkeys, table_info, table_constraints, options) {
 
-  verbmsg(glue::glue("Pulling {sQuote({column_name})} column metadata"), 2)
+  verbmsg(glue::glue("Pulling {sQuote(column_name)} column metadata"), 2)
 
   column_info <- table_info %>%
     dplyr::filter(column_name == !!column_name)
@@ -309,7 +311,7 @@ get_constraint_list <- function(constraint_name, check_constraints) {
 
 get_table_conf <- function(table_name, schema_info, schema_constraints, schema_nrows, options, source) {
 
-  verbmsg(glue::glue("Preparing schema dump for table {sQuote({table_name})}"), 0)
+  verbmsg(glue::glue("Preparing schema dump for table {sQuote(table_name)}"), 0)
 
   table_info <- schema_info %>%
     dplyr::filter(table_name == !!table_name)
