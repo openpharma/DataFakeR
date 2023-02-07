@@ -1,3 +1,7 @@
+# DataFakeR 0.1.3
+
+- Fixed computing order for dependent columns simulation.
+
 # DataFakeR 0.1.2
 
 - Built in support for `levels_ratio` parameter

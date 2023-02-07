@@ -1,6 +1,7 @@
 #' Generate fake data based on provided schema specification
 #'
 #' @name DataFakeR-package
+#' @keywords internal
 #' @importFrom magrittr %>%
 
 globalVariables(c(
