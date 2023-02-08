@@ -142,7 +142,7 @@ For example speficying `nrows = nrows_simul_ratio(0.1, 100)`, will result with:
 - `nrows * 100` rows when `nrows` is specified for the table, and `nrows` is between 0 and 1,
 - an error when `nrows` is specified in yaml file but is larger than 1.
 
-To understand how to create custom methods please check the definition of `nrows_simul_constant` and `nrows_simul_ratio`.
+To understand how to create custom methods please check the definition of `nrows_simul_constant()` and `nrows_simul_ratio()`.
 
 **Note** The only supported `opt_default_table` parameter is `nrows`. In the future releases, the option to set up custom parameters and actively use them in the simulation process will be enabled.
 

@@ -73,7 +73,7 @@ schema_get_table(sch, "patient")
 Now we'd like to extend the definition following the below rules:
 
 1. For each `patient_id` we usually want to have more than one row (it allows us to analyze the patient in multiple treatment stages). 
-2. For each `patient_id`, `lineid` is the sequence starting from 1 to the number of patient rows.
+2. For each `patient_id`, `line_number` is the sequence starting from 1 to the number of patient rows.
 3. `gender` should be unique for each `patient_id` value.
 4. `biomarker` value should `mean = 0.5` for females and `mean = 0.6` for males.
 
@@ -113,7 +113,7 @@ schema_get_table(sch, "patient")
 
 #### Rule no 2
 
-Now, we'd like to make sure `line_id` is a sequence `1:n`, where `n` is the number of rows for each patient.
+Now, we'd like to make sure `line_number` is a sequence `1:n`, where `n` is the number of rows for each patient.
 
 If we define `line_number` formula as `!expr 1:dplyr::n()`, the resulting column would be a sequence `1:n` where `n` is the number of table rows.
 There is an obvious need to apply grouping by `patient_id`.

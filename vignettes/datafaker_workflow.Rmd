@@ -103,7 +103,7 @@ Table dependencies are defined by foreign keys definition, whereas inner-table c
 
 - the column is [grouped by](extra_parameters.html) another one,
 - the column is bounded by equality constraint with another one,
-- the column is defined by [formula](simulation_methods.Rmd) in which the other column was used.
+- the column is defined by [formula](simulation_methods.html#deterministic-formula-or-constraint-based-simulation-) in which the other column was used.
 
 To check tables dependencies use:
 
