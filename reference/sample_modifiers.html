@@ -154,8 +154,8 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">unique_sample</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="va">my_mean</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span>, my_mean <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2.7306124 2.7210023 2.4879445 2.4263836 1.4340168 2.8730335 1.2089641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 2.5791691 0.1798648 0.9900784</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.9751768  1.4232448  2.3145267  1.3069100  2.5500642  1.8788824</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7]  2.6350277  1.0081140  2.2643543  1.5788523</span>
 <span class="r-in"><span><span class="fu">unique_sample</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">values</span>, <span class="va">size</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">10</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, n_name <span class="op">=</span> <span class="st">"size"</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in unique_sample(sample(values, size, replace = TRUE), size = 10,     values = 1:10, n_name = "size"):</span> It wasn't possible to generate the unique sample. Please make sure sampling configuration is correct.</span>
 <span class="r-in"><span></span></span>
@@ -165,7 +165,7 @@
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">na_rand</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, na_ratio <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA NA  3  4 NA  6 NA NA  9 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2 NA NA NA  6  7 NA NA 10</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
