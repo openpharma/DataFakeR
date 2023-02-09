@@ -1,7 +1,7 @@
 
-# DataFakeR <img src="README_files/figure-gfm/logo.png" align="right" width="120" />
+# DataFakeR <img src="man/figures/logo.png" align="right" width="120" />
 
-[![version](https://img.shields.io/static/v1.svg?label=github.com&message=v.0.1.2&color=ff69b4)](https://openpharma.github.io/DataFakeR/)
+[![version](https://img.shields.io/static/v1.svg?label=github.com&message=v.0.1.3&color=ff69b4)](https://openpharma.github.io/DataFakeR/)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-success.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 ## Overview
@@ -11,21 +11,21 @@ data preserving specified assumptions about the original one.
 
 <center>
 
-## <span style="color:blue"> DataFakeR 0.1.2 is now available\!</span>
+## <span style="color:blue"> DataFakeR 0.1.3 is now available!</span>
 
 </center>
 
 ## Installation
 
-  - from CRAN
+- from CRAN
 
-<!-- end list -->
+<!-- -->
 
     install.packages("DataFakeR")
 
-  - latest version from Github
+- latest version from Github
 
-<!-- end list -->
+<!-- -->
 
     remotes::install_github(
       "openpharma/DataFakeR"
@@ -134,13 +134,13 @@ sch <- schema_source("schema_books.yml")
 schema_plot_deps(sch)
 ```
 
-<img src="README_files/figure-gfm/tbls_dep-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-tbls_dep-1.png" style="display: block; margin: auto;" />
 
 ``` r
 schema_plot_deps(sch, "books")
 ```
 
-<img src="README_files/figure-gfm/books_dep-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-books_dep-1.png" style="display: block; margin: auto;" />
 
 ### Run data simulation
 
@@ -149,10 +149,10 @@ sch <- schema_simulate(sch)
 #> =====> Simulating table 'books' started..
 #>   ===> Simulating column 'author' started..
 #>   ===> Simulating column 'title' started..
-#>   ===> Simulating column 'bought' started..
-#>   ===> Simulating column 'book_id' started..
 #>   ===> Simulating column 'genre' started..
+#>   ===> Simulating column 'bought' started..
 #>   ===> Simulating column 'amount' started..
+#>   ===> Simulating column 'book_id' started..
 #>   ===> Simulating column 'purchase_id' started..
 #> =====> Simulating table 'borrowed' started..
 #>   ===> Simulating column 'book_id' started..
@@ -163,48 +163,48 @@ sch <- schema_simulate(sch)
 
 ``` r
 schema_get_table(sch, "books")
-#> # A tibble: 10 x 7
+#> # A tibble: 10 × 7
 #>    book_id      author                   title                           
 #>    <chr>        <chr>                    <chr>                           
 #>  1 DormAmus2021 Dorman Abshire           Amusing In Common Forest        
 #>  2 Dr. Symb2020 Dr. Montie Kihn          Symbols In My Future            
 #>  3 SharAmus2021 Sharde Howell MD         Amusing With Your Forest        
-#>  4 Dr. Lear2021 Dr. Maggie Lind          Learning From A Storm           
+#>  4 Dr. Lear2020 Dr. Maggie Lind          Learning From A Storm           
 #>  5 NathSmil2020 Nathanael Upton-Prosacco Smile Of Common Future          
-#>  6 AnasSmil2020 Anastacia Dickens        Smile In Common Forest          
-#>  7 RyleSymb2021 Ryleigh Brekke           Symbols From Mysterious Storm   
-#>  8 HortAmus2021 Hortense Rosenbaum       Amusing Before Common Technology
-#>  9 MariHidi2020 Mariana Auer-Sauer       Hiding On The Forest            
+#>  6 AnasSmil2021 Anastacia Dickens        Smile In Common Forest          
+#>  7 RyleSymb2020 Ryleigh Brekke           Symbols From Mysterious Storm   
+#>  8 HortAmus2020 Hortense Rosenbaum       Amusing Before Common Technology
+#>  9 MariHidi2021 Mariana Auer-Sauer       Hiding On The Forest            
 #> 10 TrisSmil2021 Tristen Larkin           Smile With The South            
 #>    genre     bought     amount purchase_id        
 #>    <chr>     <date>      <int> <chr>              
-#>  1 Horror    2021-01-06     36 purchase_2021-01-06
-#>  2 Romance   2020-01-31     42 purchase_2020-01-31
-#>  3 Romance   2021-04-15     NA purchase_2021-04-15
-#>  4 Horror    2021-05-11     69 purchase_2021-05-11
-#>  5 Fantasy   2020-07-18     92 purchase_2020-07-18
-#>  6 Adventure 2020-11-14     17 purchase_2020-11-14
-#>  7 Adventure 2021-03-19     81 purchase_2021-03-19
-#>  8 Romance   2021-04-13     55 purchase_2021-04-13
-#>  9 Fantasy   2020-03-16     NA purchase_2020-03-16
-#> 10 Fantasy   2021-01-06     93 purchase_2021-01-06
+#>  1 Adventure 2021-04-13     17 purchase_2021-04-13
+#>  2 Horror    2020-03-16     81 purchase_2020-03-16
+#>  3 Adventure 2021-01-06     55 purchase_2021-01-06
+#>  4 Adventure 2020-02-02     NA purchase_2020-02-02
+#>  5 Adventure 2020-04-13     93 purchase_2020-04-13
+#>  6 Romance   2021-03-02      2 purchase_2021-03-02
+#>  7 Horror    2020-08-09     42 purchase_2020-08-09
+#>  8 Adventure 2020-10-12     NA purchase_2020-10-12
+#>  9 Horror    2021-05-27     47 purchase_2021-05-27
+#> 10 Horror    2021-05-30     72 purchase_2021-05-30
 ```
 
 ``` r
 schema_get_table(sch, "borrowed")
-#> # A tibble: 30 x 2
+#> # A tibble: 30 × 2
 #>    book_id      user_id   
 #>    <chr>        <chr>     
-#>  1 TrisSmil2021 UfulZqPKPF
-#>  2 Dr. Lear2021 JGYlKQYiit
-#>  3 HortAmus2021 BNRqgNZmFa
-#>  4 Dr. Lear2021 iKZrsnhKKa
-#>  5 DormAmus2021 nzSLlWvvTG
-#>  6 SharAmus2021 nzCNAPBZcs
-#>  7 RyleSymb2021 AzAjzmgEfc
-#>  8 RyleSymb2021 YAuUVwoVcY
-#>  9 AnasSmil2020 <NA>      
-#> 10 DormAmus2021 QTGlceuLrp
+#>  1 DormAmus2021 PKPFJGYlKQ
+#>  2 SharAmus2021 YiitBNRqgN
+#>  3 RyleSymb2020 ZmFaiKZrsn
+#>  4 RyleSymb2020 hKKanzSLlW
+#>  5 AnasSmil2021 vvTGnzCNAP
+#>  6 DormAmus2021 BZcsAzAjzm
+#>  7 RyleSymb2020 gEfcYAuUVw
+#>  8 SharAmus2021 oVcYOaJXBc
+#>  9 HortAmus2020 YDCQQTGlce
+#> 10 AnasSmil2021 uLrpKuAFVd
 #> # … with 20 more rows
 ```
 
@@ -215,21 +215,21 @@ support and contributions from RWD Insights Engineering Team.**
 
 Special thanks to:
 
-  - [Adam Foryś](mailto:adam.forys@gmail.com) for technical support,
-    numerous suggestions for the current and future implementation of
-    the package.
-  - [Adam Leśniewski](mailto:alesniewski123@gmail.com) for challenging
-    limitations of the package by providing multiple real-world test
-    scenarios (and wonderful hex sticker\!).
-  - [Paweł Kawski](mailto:pawel.kawski@gmail.com) for indication of
-    initial assumptions about the package based on real-world medical
-    data.
-  - [Kamil Wais](mailto:kamil.wais@gmail.com) for highlighting the need
-    for the package and its relevance to real-world applications.
+- [Adam Foryś](mailto:adam.forys@gmail.com) for technical support,
+  numerous suggestions for the current and future implementation of the
+  package.
+- [Adam Leśniewski](mailto:alesniewski123@gmail.com) for challenging
+  limitations of the package by providing multiple real-world test
+  scenarios (and wonderful hex sticker!).
+- [Paweł Kawski](mailto:pawel.kawski@gmail.com) for indication of
+  initial assumptions about the package based on real-world medical
+  data.
+- [Kamil Wais](mailto:kamil.wais@gmail.com) for highlighting the need
+  for the package and its relevance to real-world applications.
 
 ## Lifecycle
 
-DataFakeR 0.1.2 is at experimental stage. If you find bugs or post an
+DataFakeR 0.1.3 is at experimental stage. If you find bugs or post an
 issue on GitHub page at <https://github.com/openpharma/DataFakeR/issues>
 
 ## Getting help

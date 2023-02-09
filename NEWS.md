@@ -1,3 +1,9 @@
+# DataFakeR 0.1.3
+
+- Fixed computing order for dependent columns simulation.
+- Added "pQConnection"" driver class methods for pulling DB schema.
+- Added `get_faker_opts` method to list current package options.
+
 # DataFakeR 0.1.2
 
 - Built in support for `levels_ratio` parameter

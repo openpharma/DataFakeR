@@ -11,8 +11,8 @@ get_schema_constraints.RedshiftConnection <- function(source, schema) {
   "))
   constraint_table <- dplyr::left_join(
     constr_table,
-    constr_table %>% dplyr::select(unique_constraint_name, fk_table_name = table_name, fk_column_name = column_name),
-    by = "unique_constraint_name",
+    constr_table %>% dplyr::select(constraint_name, fk_table_name = table_name, fk_column_name = column_name),
+    by = c("unique_constraint_name" = "constraint_name"),
     na_matches = "never"
   )
   if (nrow(constraint_table) == 0) {
@@ -21,7 +21,27 @@ get_schema_constraints.RedshiftConnection <- function(source, schema) {
   constraint_table
 }
 
-get_schema_constraints.PostgresConnection <- get_schema_constraints.RPostgreSQLConnection <- get_schema_constraints.RedshiftConnection
+get_schema_constraints.PqConnection <- get_schema_constraints.PostgresConnection <- get_schema_constraints.RPostgreSQLConnection <- get_schema_constraints.RedshiftConnection
+
+get_table_pk.RPostgreSQLConnection <- function(source, schema, table_name) {
+  sql_query <- glue::glue("
+    SELECT
+      pg_attribute.attname as column_name,
+      format_type(pg_attribute.atttypid, pg_attribute.atttypmod) as data_type
+    FROM pg_index, pg_class, pg_attribute, pg_namespace
+    WHERE
+      pg_class.oid = '{schema}.{table_name}'::regclass AND
+      indrelid = pg_class.oid AND
+      nspname = '{schema}' AND
+      pg_class.relnamespace = pg_namespace.oid AND
+      pg_attribute.attrelid = pg_class.oid AND
+      pg_attribute.attnum = any(pg_index.indkey)
+     AND indisprimary
+  ")
+  DBI::dbGetQuery(source, sql_query)
+}
+
+get_table_pk.PqConnection <- get_table_pk.PostgresConnection <- get_table_pk.RPostgreSQLConnection
 
 get_table_pk.RedshiftConnection <- function(source, schema, table_name) {
   # the way to source pk's without having permissions to information_schema
@@ -35,8 +55,6 @@ get_table_pk.RedshiftConnection <- function(source, schema, table_name) {
   ")
   DBI::dbGetQuery(source, sql_query)
 }
-
-get_table_pk.PostgresConnection <- get_table_pk.RPostgreSQLConnection <- get_table_pk.RedshiftConnection
 
 pull_column_values.RedshiftConnection <- function(source, col_info, values, max_uniq_to_pull) {
   if (!identical(values, TRUE) || is.null(max_uniq_to_pull)) {
@@ -56,7 +74,7 @@ pull_column_values.RedshiftConnection <- function(source, col_info, values, max_
   result
 }
 
-pull_column_values.PostgresConnection <- pull_column_values.RPostgreSQLConnection <- pull_column_values.RedshiftConnection
+pull_column_values.PqConnection <- pull_column_values.PostgresConnection <- pull_column_values.RPostgreSQLConnection <- pull_column_values.RedshiftConnection
 
 pull_column_nchar.RedshiftConnection <- function(source, col_info, nchar) {
   if (!identical(nchar, TRUE)) {
@@ -70,7 +88,7 @@ pull_column_nchar.RedshiftConnection <- function(source, col_info, nchar) {
   nchar
 }
 
-pull_column_nchar.PostgresConnection <- pull_column_nchar.RPostgreSQLConnection <- pull_column_nchar.RedshiftConnection
+pull_column_nchar.PqConnection <- pull_column_nchar.PostgresConnection <- pull_column_nchar.RPostgreSQLConnection <- pull_column_nchar.RedshiftConnection
 
 pull_column_range.RedshiftConnection <- function(source, col_info, range) {
 
@@ -87,7 +105,7 @@ pull_column_range.RedshiftConnection <- function(source, col_info, range) {
   c(result$min_val, result$max_val)
 }
 
-pull_column_range.PostgresConnection <- pull_column_range.RPostgreSQLConnection <- pull_column_range.RedshiftConnection
+pull_column_range.PqConnection <- pull_column_range.PostgresConnection <- pull_column_range.RPostgreSQLConnection <- pull_column_range.RedshiftConnection
 
 pull_column_na_ratio.RedshiftConnection <- function(source, col_info, na_ratio) {
 
@@ -104,7 +122,7 @@ pull_column_na_ratio.RedshiftConnection <- function(source, col_info, na_ratio) 
   result$na_ratio
 }
 
-pull_column_na_ratio.PostgresConnection <- pull_column_na_ratio.RPostgreSQLConnection <- pull_column_na_ratio.RedshiftConnection
+pull_column_na_ratio.PqConnection <- pull_column_na_ratio.PostgresConnection <- pull_column_na_ratio.RPostgreSQLConnection <- pull_column_na_ratio.RedshiftConnection
 
 pull_data_nrows.RedshiftConnection <- function(source, schema, nrows, ...) {
 
@@ -115,6 +133,7 @@ pull_data_nrows.RedshiftConnection <- function(source, schema, nrows, ...) {
   tables_rows <- list()
   for (table in tables$table_name) {
     tbl_rows <- DBI::dbGetQuery(source, glue::glue("SELECT '{table}' as table_name, COUNT(1) as nrows FROM {schema}.{table};"))
+    tbl_rows$nrows <- as.integer(tbl_rows$nrows)
     tables_rows <- append(tables_rows, list(tbl_rows))
   }
   tables_rows <- dplyr::bind_rows(tables_rows)
@@ -124,7 +143,7 @@ pull_data_nrows.RedshiftConnection <- function(source, schema, nrows, ...) {
   return(tables_rows)
 }
 
-pull_data_nrows.PostgresConnection <- pull_data_nrows.RPostgreSQLConnection <- pull_data_nrows.RedshiftConnection
+pull_data_nrows.PqConnection <- pull_data_nrows.PostgresConnection <- pull_data_nrows.RPostgreSQLConnection <- pull_data_nrows.RedshiftConnection
 
 pull_column_levels_ratio.RedshiftConnection <- function(source, col_info, levels_ratio) {
 
@@ -141,7 +160,7 @@ pull_column_levels_ratio.RedshiftConnection <- function(source, col_info, levels
   result$levels_ratio
 }
 
-pull_column_levels_ratio.PostgresConnection <- pull_column_levels_ratio.RPostgreSQLConnection <- pull_column_levels_ratio.RedshiftConnection
+pull_column_levels_ratio.PqConnection <- pull_column_levels_ratio.PostgresConnection <- pull_column_levels_ratio.RPostgreSQLConnection <- pull_column_levels_ratio.RedshiftConnection
 
 get_schema_info.RedshiftConnection <- function(source, schema) {
   DBI::dbGetQuery(
@@ -149,4 +168,17 @@ get_schema_info.RedshiftConnection <- function(source, schema) {
     glue::glue("select * from information_schema.columns WHERE table_schema = '{schema}'")
   )
 }
-get_schema_info.PostgresConnection <- get_schema_info.RPostgreSQLConnection <- get_schema_info.RedshiftConnection
+get_schema_info.PqConnection <- get_schema_info.PostgresConnection <- get_schema_info.RPostgreSQLConnection <- function(source, schema) {
+  info <- DBI::dbGetQuery(
+    source,
+    glue::glue("select * from information_schema.columns WHERE table_schema = '{schema}'")
+  )
+  info %>%
+    dplyr::mutate(
+      data_type = ifelse(
+        data_type == "character" & !is.na(character_maximum_length),
+        paste0("char(", character_maximum_length, ")"),
+        data_type
+      )
+    )
+}

@@ -5,6 +5,7 @@
 \alias{faker_configuration}
 \alias{default_faker_opts}
 \alias{set_faker_opts}
+\alias{get_faker_opts}
 \title{Default options for pulling metadata and data simulation}
 \format{
 An object of class \code{list} of length 27.
@@ -42,6 +43,8 @@ set_faker_opts(
   opt_default_table,
   global = TRUE
 )
+
+get_faker_opts()
 }
 \arguments{
 \item{opt_pull_character, opt_pull_numeric, opt_pull_integer, opt_pull_logical, opt_pull_date, opt_pull_table, opt_default_character, opt_simul_spec_character, opt_simul_restricted_character, opt_simul_default_fun_character, opt_default_numeric, opt_simul_spec_numeric, opt_simul_restricted_numeric, opt_simul_default_fun_numeric, opt_default_integer, opt_simul_spec_integer, opt_simul_restricted_integer, opt_simul_default_fun_integer, opt_default_logical, opt_simul_spec_logical, opt_simul_restricted_logical, opt_simul_default_fun_logical, opt_default_date, opt_simul_spec_date, opt_simul_restricted_date, opt_simul_default_fun_date, opt_default_table}{Parameters defined in default configuration that can be modified by using \code{set_faker_opts} function.
@@ -57,6 +60,7 @@ Generated with the set of configuration functions:
 \link{sourcing_metadata}.
 }
 \details{
-\code{set_faker_opts} allows to overwrite selected options,
+\code{set_faker_opts} allows to overwrite selected options.
+\code{get_faker_opts} lists the current options configuration.
 }
 \keyword{datasets}

@@ -1,17 +1,11 @@
 nodes_order <- function(graph) {
-  nodes <- graph %>%
+  nodes_ordered <- graph %>%
+    dplyr::mutate(old_ind = seq_len(tidygraph::graph_order())) %>%
+    dplyr::arrange(tidygraph::node_topo_order()) %>%
     tidygraph::activate(nodes) %>%
-    as.data.frame() %>% {
-      1:nrow(.)
-    }
-  edges <- graph %>%
-    tidygraph::activate(edges) %>%
-    as.data.frame()
-
-  edges <- edges %>%
-    dplyr::mutate(source = !from %in% to)
-
-  unique(c(edges[edges$source, "from"], edges[!edges$source, "from"], nodes))
+    as.data.frame() %>%
+    dplyr::pull(old_ind)
+  return(nodes_ordered)
 }
 
 simulate_schema_obj <- function(schema_obj) {

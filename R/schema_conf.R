@@ -502,7 +502,8 @@ opt_pull_table <- function(nrows = "exact", ...) {
 #' \link{special_simulation}, \link{restricted_simulation},
 #' \link{sourcing_metadata}.
 #'
-#' \code{set_faker_opts} allows to overwrite selected options,
+#' \code{set_faker_opts} allows to overwrite selected options.
+#' \code{get_faker_opts} lists the current options configuration.
 #'
 #' @param opt_pull_character,opt_pull_numeric,opt_pull_integer,opt_pull_logical,opt_pull_date,opt_pull_table,opt_default_character,opt_simul_spec_character,opt_simul_restricted_character,opt_simul_default_fun_character,opt_default_numeric,opt_simul_spec_numeric,opt_simul_restricted_numeric,opt_simul_default_fun_numeric,opt_default_integer,opt_simul_spec_integer,opt_simul_restricted_integer,opt_simul_default_fun_integer,opt_default_logical,opt_simul_spec_logical,opt_simul_restricted_logical,opt_simul_default_fun_logical,opt_default_date,opt_simul_spec_date,opt_simul_restricted_date,opt_simul_default_fun_date,opt_default_table
 #' Parameters defined in default configuration that can be modified by using \code{set_faker_opts} function.
@@ -574,4 +575,10 @@ set_faker_opts <- function(
     return(invisible(current_opts))
   }
   current_opts
+}
+
+#' @rdname faker_configuration
+#' @export
+get_faker_opts <- function() {
+  getOption("dfkr_options")
 }

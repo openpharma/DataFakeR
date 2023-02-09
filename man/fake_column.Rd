@@ -18,3 +18,4 @@ fake_column(n, col_def, schema, faker_opts)
 \description{
 Schema graph_tbl with already faked data (if performed)
 }
+\keyword{internal}
