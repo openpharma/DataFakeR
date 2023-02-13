@@ -2,8 +2,7 @@
 title: "Welcome to DataFakeR!"
 author: "Krystian Igras"
 date: "`r Sys.Date()`"
-output: github_document
-always_allow_html: yes
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Welcome to DataFakeR!}
   %\VignetteEngine{knitr::rmarkdown}

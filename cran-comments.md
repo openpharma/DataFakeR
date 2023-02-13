@@ -1,37 +1,81 @@
 ## Test environments
 * local check
-  Ubuntu 18.04.6 LTS, R 4.1.1 (2021-08-10)
+  Ubuntu 18.04.6 LTS, R 4.1.2 (2021-11-01)
 * win-builder
-  R 4.1.1 (2021-08-10)
-  R devel (2021-09-17 r80929)
+  R version 4.1.3 (2022-03-10)
+  R version 4.2.2 (2022-10-31 ucrt)
+  R Under development (unstable) (2023-02-09 r83797 ucrt)
 
-## `R CMD check DataFakeR_0.1.2.tar.gz --as-cran` results
+## `R CMD check DataFakeR_0.1.3.tar.gz --as-cran` results
 
 ```
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Krystian Igras <krystian8207@gmail.com>’
+
+New submission
+
+Package was archived on CRAN
+
+CRAN repository db overrides:
+  X-CRAN-Comment: Archived on 2023-01-10 as issues were not corrected
+    in time.
+...
 Status: 1 NOTE
 ```
 
-Note regarding checking CRAN incoming feasibility.
+## `devtools::check()` results
+
+```
+0 errors ✓ | 0 warnings ✓ | 0 notes ✓
+```
 
 ## win-builder result
 
 ```
-* using log directory 'd:/RCompile/CRANguest/R-release/DataFakeR.Rcheck'
-* using R version 4.1.1 (2021-08-10)
+* using log directory 'd:/RCompile/CRANguest/R-oldrelease/DataFakeR.Rcheck'
+* using R version 4.1.3 (2022-03-10)
 * using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+...
+* checking CRAN incoming feasibility ... Note_to_CRAN_maintainers
+Maintainer: 'Krystian Igras <krystian8207@gmail.com>'
+...
+Status: OK
+```
+
+```
+* using log directory 'd:/RCompile/CRANguest/R-release/DataFakeR.Rcheck'
+* using R version 4.2.2 (2022-10-31 ucrt)
+* using platform: x86_64-w64-mingw32 (64-bit)
+...
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Krystian Igras <krystian8207@gmail.com>'
+
+New submission
+
+Package was archived on CRAN
+
+CRAN repository db overrides:
+  X-CRAN-Comment: Archived on 2023-01-10 as issues were not corrected
+    in time.
 ...
 Status: 1 NOTE
 ```
-
-Note regarding checking CRAN incoming feasibility.
 
 ```
 * using log directory 'd:/RCompile/CRANguest/R-devel/DataFakeR.Rcheck'
-* using R Under development (unstable) (2021-09-17 r80929)
+* using R Under development (unstable) (2023-02-09 r83797 ucrt)
 * using platform: x86_64-w64-mingw32 (64-bit)
+...
+Maintainer: 'Krystian Igras <krystian8207@gmail.com>'
+
+New submission
+
+Package was archived on CRAN
+
+CRAN repository db overrides:
+  X-CRAN-Comment: Archived on 2023-01-10 as issues were not corrected
+    in time.
 ...
 Status: 1 NOTE
 ```
-
-Note regarding checking CRAN incoming feasibility.
-
